@@ -12,4 +12,10 @@
 ></app-custom-input>
 
 <p>Buscando alojamiento en: {{ destino }}</p>
+
+@for (item of propiedades; track item.id) {
+    <app-property-card [Propiedad]="item"></app-property-card>
+} @empty {
+    <p>No hay propiedades disponibles</p>
+}
 </div>

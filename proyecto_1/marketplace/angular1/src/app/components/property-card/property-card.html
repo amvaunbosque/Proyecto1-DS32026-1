@@ -1,0 +1,11 @@
+<div class = "card">
+    <h3>{{Propiedad.nombre}}</h3>
+    <p>{{ Propiedad.ciudad}}</p>
+    <p>Precio por noche: {{Propiedad.precioNoche}}</p>
+
+    @if (Propiedad.disponible) {
+        <span>Disponible</span>
+    }@else{
+        <span> No disponible</span>
+    }
+</div>
