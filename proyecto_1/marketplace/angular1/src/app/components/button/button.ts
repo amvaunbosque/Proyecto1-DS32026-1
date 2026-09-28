@@ -12,6 +12,7 @@ export class Button {
   @Output() buttonClick = new EventEmitter<boolean>();
 
   onClickButton(){
+    console.log('click en el botón');
     this.buttonClick.emit(true);
   }
 }

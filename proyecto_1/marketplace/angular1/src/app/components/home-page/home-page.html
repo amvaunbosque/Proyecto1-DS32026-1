@@ -2,6 +2,14 @@
     <h1>{{ title }}</h1>
     <h1>{{ subtitle }}</h1>
 
-    <app-button [textButton]="'explorar'"(buttonClick)="onButtonClick()"></app-button>
+    <app-button [textButton]="'explorar'" (buttonClick)="onButtonClick()"></app-button>
     <p>{{mensaje}}</p>
+
+    <app-custom-input
+    [inputLabel]="'¿A dónde quieres ir?'"
+    [inputType]="'text'"
+    [(value)]="destino"
+></app-custom-input>
+
+<p>Buscando alojamiento en: {{ destino }}</p>
 </div>

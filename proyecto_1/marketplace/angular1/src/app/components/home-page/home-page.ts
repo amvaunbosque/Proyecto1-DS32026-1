@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Button } from '../button/button';
+import { CustomInput } from '../custom-input/custom-input';
 
 @Component({
-  imports: [Button],
-  selector: 'app-home-page.',
+  imports: [Button, CustomInput],
+  selector: 'app-home-page',
   styleUrl: './home-page.css',
   templateUrl: './home-page.html',
 })
@@ -17,4 +18,6 @@ export class HomePage {
   onButtonClick(){
     this.mensaje= "click";
   }
+
+  destino: String | number ="";
 }
