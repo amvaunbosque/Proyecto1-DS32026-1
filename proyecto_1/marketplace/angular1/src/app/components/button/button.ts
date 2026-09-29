@@ -10,6 +10,7 @@ export class Button {
 
   @Input() textButton! : String;
   @Output() buttonClick = new EventEmitter<boolean>();
+  @Input() variant: String = 'primary';
 
   onClickButton(){
     console.log('click en el botón');

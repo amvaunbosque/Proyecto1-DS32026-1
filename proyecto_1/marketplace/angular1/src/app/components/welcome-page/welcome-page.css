@@ -1,0 +1,28 @@
+.pantalla {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: white;
+}
+
+.fondo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* la imagen llena el espacio sin deformarse */
+}
+
+.panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 100px 20px 24px;
+  background: #d9d9d9;
+  border-radius: 50% 50% 0 0 / 120px 120px 0 0;   /* la curva de arriba */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
