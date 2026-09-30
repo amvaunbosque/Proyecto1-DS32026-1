@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Button } from '../button/button';
+import { RegistryPage } from '../registry-page/registry-page';
 
 @Component({
-  imports: [Button],
+  imports: [Button, RegistryPage],
   selector: 'app-welcome-page',
   styleUrl: './welcome-page.css',
   templateUrl: './welcome-page.html',
@@ -17,5 +18,8 @@ export class WelcomePage {
 
   onRegister() {
     console.log('registrarse');
+    this.mostrarRegistro = true;
   }
-}
+
+  mostrarRegistro: boolean = false;
+  }

@@ -6,12 +6,12 @@ button {
   cursor: pointer;
 }
 
-.primary {
-  background: #1a1a1a;
+.register {
+  background: #0F3040;
   color: white;
 }
 
-.secondary {
+.signIn {
   background: #7a7a7a;
   color: white;
 }

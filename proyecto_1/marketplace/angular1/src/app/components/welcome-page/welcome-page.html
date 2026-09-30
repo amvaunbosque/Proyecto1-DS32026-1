@@ -1,11 +1,17 @@
-<section class="pantalla">
+
+@if (!mostrarRegistro) {
+    <section class="pantalla">
 <img class="fondo" src="entry.jpg" alt="Fondo de bienvenida">
 
 <div class="panel">
     <h1>{{ title }}</h1>
     <p>{{ subtitle }}</p>
 
-    <app-button [textButton]="'Iniciar sesión'" [variant]="'primary'" (buttonClick)="onLogin()"></app-button>
-    <app-button [textButton]="'Registrarse'" [variant]="'secondary'" (buttonClick)="onRegister()"></app-button>
+    <app-button [textButton]="'Iniciar sesión'" [variant]="'register'" (buttonClick)="onLogin()"></app-button>
+    <app-button [textButton]="'Registrarse'" [variant]="'signIn'" (buttonClick)="onRegister()"></app-button>
+
 </div>
 </section>
+    } @else {
+<app-registry-page></app-registry-page>
+}
