@@ -1,5 +1,6 @@
 <label>{{inputLabel}}</label>
 <input 
+[class]="inputClass"
 [type]="inputType"
 [ngModel]="value"
 (ngModelChange)="onHandleChange($event)">

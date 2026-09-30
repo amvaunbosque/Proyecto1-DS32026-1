@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 export class CustomInput {
   @Input() inputLabel: String = "";
   @Input() inputType: String = "text";
+  @Input() inputClass: String="";
 
   @Input() value: String | number = "";
   @Output() valueChange = new EventEmitter<String | number>();

@@ -1,0 +1,45 @@
+.registro {
+    max-width: 480px; 
+    margin: 0 auto; 
+    text-align: left; }
+
+.header{
+    font-family: 'Dela Gothic One', sans-serif;
+    font-size: 4.375rem;
+    text-align: center;
+    color: #000;;
+    margin: 0.1em 0;
+    position: relative;
+}
+
+.subtitle-description{
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 1.205rem;
+    text-align: center;
+    color: #000;;
+    margin: 0.1rem 0;
+    position: relative;
+}
+
+.text-complement {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 1.02rem;
+    max-width: 30rem ;
+    margin: 3rem left;
+    color: #000;
+}
+.residencias, .pago-fila {
+    font-family: 'Funnel Sans', sans-serif;
+    display: flex;
+    gap: 16px;
+}
+
+.residencias > div {
+    font-family: 'Funnel Sans', sans-serif;
+    flex: 1;
+}
+
+.pago-fila > app-custom-input {
+    font-family: 'Funnel Sans', sans-serif;
+    flex: 1;
+}

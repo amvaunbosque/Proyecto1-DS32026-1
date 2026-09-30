@@ -1,3 +1,36 @@
 <div class= "registro">
-    <h1> {{title}}</h1>
+    <h1 class="header"> {{title}}</h1> <!--se utiliza para declarar y conectar el bloque del css para el titulo -->
+    <h3 class = "subtitle-description"> {{ subtitle }}</h3>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
+    
+    <h3 class = "text-complement">Información de contacto</h3>
+    <app-custom-input [inputLabel]="'Nombre completo'" [inputType]="'text'" [inputClass]="'name'" [(value)]="nombreCompleto"></app-custom-input>
+    <app-custom-input [inputLabel]="'Dirección de correo'" [inputType]="'email'" [inputClass]="'mail'" [(value)]="correo"></app-custom-input>
+
+    <div class="residencias">
+    <div>
+        <h4>Residencia</h4>
+        <app-custom-input [inputLabel]="'Dirección'" [inputType]="'text'" [(value)]="direccion1"></app-custom-input>
+        <app-custom-input [inputLabel]="'Teléfono'" [inputType]="'tel'" [(value)]="telefono1"></app-custom-input>
+    </div>
+    <div>
+        <h4>Residencia</h4>
+        <app-custom-input [inputLabel]="'Dirección'" [inputType]="'text'" [(value)]="direccion2"></app-custom-input>
+        <app-custom-input [inputLabel]="'Teléfono'" [inputType]="'tel'" [(value)]="telefono2"></app-custom-input>
+    </div>
+</div>
+
+    <h3>Método de pago</h3>
+    <app-custom-input [inputLabel]="'Número de tarjeta'" [inputType]="'text'" [(value)]="numeroTarjeta"></app-custom-input>
+
+        <div class="pago-fila">
+    <app-custom-input [inputLabel]="'Fecha de exp'" [inputType]="'text'" [(value)]="fechaExp"></app-custom-input>
+    <app-custom-input [inputLabel]="'CVV'" [inputType]="'text'" [(value)]="cvv"></app-custom-input>
+        </div>
+
+    <app-custom-input [inputLabel]="'Nombre en la tarjeta'" [inputType]="'text'" [(value)]="nombreTarjeta"></app-custom-input>
+
     </div>
