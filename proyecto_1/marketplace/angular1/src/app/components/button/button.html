@@ -1,1 +1,7 @@
-<button [class]="variant" (click)="onClickButton()">{{ textButton }}</button>
+<button [class]="variant" (click)="buttonClick.emit()">{{ textButton }}</button>
+<!-- 1. el variant es un property binfding, que es cynado se hace un enlace de propiedad de Anegular
+    2. los corchtees indican que angular va a evaluar una expresión de ts
+    3. por eso [class] siginifca qye va a asignar el valor de la variable variant al atributo calls del btn
+    4. (click) > cuando el usurio hacce clcick en el btn
+    5. buttonClick.emit() > el método del componente que se ejecuta al hacer clic
+    6. {{}} > interpolación = pasar de angular a js y muestra el valor de la variable"-->

@@ -13,7 +13,7 @@ export class Button {
   @Input() variant: String = 'primary';
 
   onClickButton(){
-    console.log('click en el botón');
-    this.buttonClick.emit(true);
+    console.log('click en el botón');/* sirve para depuraar o verificar que el clic realmente se está ejecutando*/
+    this.buttonClick.emit(true);/*dispara el evento y envia el valor trur como dato adjunto, para que el componente padre lo reciba */
   }
 }

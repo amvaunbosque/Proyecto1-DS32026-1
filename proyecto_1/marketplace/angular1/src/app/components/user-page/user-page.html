@@ -1,0 +1,57 @@
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
+
+@if (!mostrarConfiguration) {
+    <div class="top-bar">
+        <div class="icon-circle"></div>
+    <h3 class="text-complement">Información de contacto</h3>
+        <div class="top-bar-actions">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <span class="menu-icon">⋯</span>
+        </div>
+    </div>
+
+    <section class="registro">
+    <h4 class="section-label">Reservas</h4>
+    <div class="opciones-fila">
+        @for (opcion of reservaOpciones; track $index) {
+    <div
+            class="opcion-box"
+            [class.selected]="reservaSeleccionada === $index"
+            (click)="seleccionarReserva($index)">
+            </div>
+        }
+    </div>
+
+    <h4 class="section-label">Preferencias</h4>
+    <div class="circulos-fila">
+        @for (color of preferenciasColores; track $index) {
+            <div
+            class="circulo"
+            [class.selected]="preferenciaSeleccionada === $index"
+            [style.background]="color"
+            (click)="seleccionarPreferencia($index)">
+            </div>
+        }
+    </div>
+
+    <div class="cards-fila">
+    @for (card of metodoPago; track $index) {
+        <div
+            class="metodo-card"
+            [class.selected]="card.seleccionado"
+            (click)="seleccionarMetodo($index)">
+            <span class="indicador"></span>
+            <div class="linea linea-larga"></div>
+            <div class="linea linea-corta"></div>
+        </div>
+    }
+    </div>
+
+    <app-button [textButton]="'Pagar de manera segura'" [variant]="'base-button'" (buttonClick)="onPagar()"></app-button>
+</section>
+}@else {
+
+}

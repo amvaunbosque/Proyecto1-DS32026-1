@@ -1,7 +1,9 @@
 import { Component, Input, Output, EventEmitter} from '@angular/core';
 import { CustomInput } from '../custom-input/custom-input';
+import { Button } from '../button/button';
+import { UserPage } from '../user-page/user-page';
 @Component({
-  imports: [CustomInput],
+  imports: [CustomInput, Button, UserPage],
   selector: 'app-registry-page',
   styleUrl: './registry-page.css',
   templateUrl: './registry-page.html',
@@ -27,4 +29,11 @@ export class RegistryPage {
   fechaExp: String = "";
   cvv: String = "";
   nombreTarjeta: String = "";
+
+  
+  onRegister() {
+    console.log('iniciar sesión');
+    this.mostrarUser = true;
+  }
+  mostrarUser: boolean = false;
 }

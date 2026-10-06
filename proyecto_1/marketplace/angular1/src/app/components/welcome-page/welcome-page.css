@@ -1,17 +1,17 @@
-.header{
+.header{ /*clase apra especificaciones del titulo*/
     font-family: 'Dela Gothic One', sans-serif;
     font-size: 2.375rem;
     text-align: center;
-    color: #000;;
-    position: relative;
+    color: #000;
+    margin: 0;
 }
 
-.subtitle{
+.subtitle{ /*clase apra especificaciones del titulo*/
     font-family: 'Funnel Sans', sans-serif;
     font-size: 1rem;
     text-align: center;
-    color: #000;;
-    position: relative;
+    color: #000;
+    margin: 0 0 1.5rem 0;
 }
 
 .pantalla { /*sin esto la imagen y el panell non tienen contenedor de altura completa*/
@@ -21,42 +21,26 @@
     background: white;
 }
 
-.fondo { 
+.fondo { /*clase para el fondo de la imagen, para decir el tamaño y claridad*/
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.panel {/*le da fondo gris, la posición*/
+.panel {/*le da fondo gris al arco, la posición*/
     position: absolute; /*le da posición fija abajo*/
     bottom: 0;
     left: 0;
     width: 100%;
     box-sizing: border-box;
-    padding: 60px 20px 24px;
+    padding: 3.75rem 1.25rem 1.5rem;
+
     background: #d9d9d9;
-    border-radius: 50% 50% 0 0 / 120px 120px 0 0; /*esta verga es loq ue pone curvo njd*/
+    border-radius: 50% 50% 0 0 / 7.5rem 7.5rem 0 0; /*esta verga es loq ue pone curvo njd*/
     text-align: center;
+
     display: flex;
     flex-direction: column; /*por estoe es que se acomodan vertical lso btns*/
     align-items: center;
-    gap: 12px;
-}
-
-.header {
-    font-family: 'Dela Gothic One', sans-serif;
-    font-size: 2.375rem;
-    text-align: center;
-    color: #000;
-    position: relative;
-    margin: 0;
-}
-
-.subtitle {
-    font-family: 'Funnel Sans', sans-serif;
-    font-size: 1rem;
-    text-align: center;
-    color: #000;
-    position: relative;
-    margin: 0;
+    gap: 1rem;
 }
