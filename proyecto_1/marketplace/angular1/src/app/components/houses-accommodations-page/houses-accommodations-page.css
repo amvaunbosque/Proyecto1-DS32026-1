@@ -4,7 +4,6 @@
 }
 
 .registro {
-    background: linear-gradient(135deg, #A8C0A0 0%, #6B8A6E 100%);
     max-width: 90rem; /*lo que hace que el btn sea más ancho*/
     margin: 4rem auto 0 auto; 
     text-align: left; 

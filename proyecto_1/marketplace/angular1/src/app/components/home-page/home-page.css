@@ -1,3 +1,9 @@
+:host{
+    font-family: 'Funnel Sans', sans-serif;
+    display: block;
+    background: #F2F6FA;
+}
+
 .marketplace { /*contenedor principal*/
     max-width: 45rem;
     margin: 0 auto;

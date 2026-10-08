@@ -1,51 +1,64 @@
 import { Component } from '@angular/core';
 import { HousesAccommodationsPage } from '../houses-accommodations-page/houses-accommodations-page';
+import { ApartmentsAccommodationsPage } from '../apartments-accommodations-page/apartments-accommodations-page';
+import { CommonModule } from '@angular/common';
 
+type Vista = 'marketplace' | 'casas' |'apartamentos';
 interface Destino {
-  nombre: string;
-  calificacion: string;
   ciudad: string;
   pais: string;
-  precio: string;
   imagen: string;
 }
 @Component({
-  imports: [HousesAccommodationsPage],
+  imports: [HousesAccommodationsPage, ApartmentsAccommodationsPage, CommonModule],
+  standalone: true,
   selector: 'app-home-page',
   styleUrl: './home-page.css',
   templateUrl: './home-page.html',
 })
-export class HomePage {
-mostrarPaginaPrincipal: boolean = false;
 
-  destinos : Destino[] = [
-    { nombre: 'USA', calificacion: '4.5', ciudad: 'New York, NY',     pais: 'Unitated States of America', precio: '360.000 COP', imagen: 'NY City.jpg' },
-    { nombre: 'Miami Beach',   calificacion: '4.8', ciudad: 'Miami, USA', pais: 'Unitated States of America', precio: '420.000 COP', imagen: 'Miami.jpg' },
-    { nombre: 'Dubai Marina',  calificacion: '4.7', ciudad: 'República de Dubai, Dubai',   pais: 'Republica de Emiratos Árabes',  precio: '510.000 COP', imagen: 'Dubai.jpg' },
-    { nombre: 'Tailandia', calificacion: '4.5', ciudad: 'Krung Thep, Bangkok',     pais: 'Tailandia', precio: '360.000 COP', imagen: 'Bangkok.jpg' },
-    { nombre: 'Caracas',   calificacion: '4.8', ciudad: 'Distrito Capital, Caracas', pais: 'Venezuela', precio: '420.000 COP', imagen: 'Caracas.jpg' },
-    { nombre: 'Italia',  calificacion: '4.7', ciudad: 'Lacio, Roma',   pais: 'Italia',  precio: '510.000 COP', imagen: 'Roma.jpg' },
-    { nombre: 'Brasil', calificacion: '4.5', ciudad: 'Rio de Janeiro, Rio de Janeiro',     pais: 'Brasil', precio: '360.000 COP', imagen: 'Rio de Janeiro.jpg' },
-    { nombre: 'Singapur',   calificacion: '4.8', ciudad: 'Singapur, Singapur', pais: 'Singapur', precio: '420.000 COP', imagen: 'Singapur.jpg' },
-    { nombre: 'Estambul',  calificacion: '4.7', ciudad: 'Estambul, Estrecho del Bósforo',   pais: 'Turquía',  precio: '510.000 COP', imagen: 'Istambul.jpg' },
+export class HomePage {
+
+  tipoVista: Vista = 'marketplace'; /*controla que vista se muetra en el switch del html*/ 
+
+  irA(vista: Vista): void{ /*cambia la vista actual*/
+    this.tipoVista = vista;
+  }
+
+  destinos : Destino[] = [/* datos de ejemplo para las cards del marketplace*/
+    { ciudad: 'New York, NY',     pais: 'Unitated States of America', imagen: 'NY City.jpg' },
+    { ciudad: 'Miami, USA', pais: 'Unitated States of America', imagen: 'Miami.jpg' },
+    { ciudad: 'República de Dubai, Dubai',   pais: 'Republica de Emiratos Árabes',  imagen: 'Dubai.jpg' },
+    { ciudad: 'Krung Thep, Bangkok',     pais: 'Tailandia', imagen: 'Bangkok.jpg' },
+    { ciudad: 'Distrito Capital, Caracas', pais: 'Venezuela', imagen: 'Caracas.jpg' },
+    { ciudad: 'Lacio, Roma',   pais: 'Italia',  imagen: 'Roma.jpg' },
+    { ciudad: 'Rio de Janeiro, Rio de Janeiro',     pais: 'Brasil', imagen: 'Rio de Janeiro.jpg' },
+    { ciudad: 'Singapur, Singapur', pais: 'Singapur', imagen: 'Singapur.jpg' },
+    { ciudad: 'Estambul, Estrecho del Bósforo',   pais: 'Turquía',  imagen: 'Istambul.jpg' },
     ];
 
-  visibles: number = 3;
+  limiteVisibles = 2;/*cuántas cards se muestran incialmente */
 
-  get destinosVisibles(): Destino[] {
-    return this.destinos.slice(0, this.visibles);
+  get destinosVisibles(): Destino[] { /*subconjunto visible de destinos */
+    return this.destinos.slice(0, this.limiteVisibles);
   }
 
-  get hayMas(): boolean {
-    return this.visibles < this.destinos.length;
-  }
-
-  verMas() {
-    this.visibles += 3;   // muestra 3 más por clic
+  verMas() : void {
+    this.limiteVisibles += 3;   // muestra 3 más por clic 
+    if(this.limiteVisibles > this.destinos.length){
+      this.limiteVisibles = this.destinos.length;
+    }
   }
 
   onCasas() {
-    console.log('casas');
-    this.mostrarPaginaPrincipal = true;
+    this.irA('casas');
+  }
+
+  onApartments() {
+    this.irA('apartamentos');
+  }
+
+  onMarketplace() {
+    this.irA('marketplace');
   }
 }
