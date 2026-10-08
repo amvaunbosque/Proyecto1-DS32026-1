@@ -1,23 +1,61 @@
-<div class="hero">
-    <h1>{{ title }}</h1>
-    <h1>{{ subtitle }}</h1>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
 
-    <app-button [textButton]="'explorar'" (buttonClick)="onButtonClick()"></app-button>
-    <p>{{mensaje}}</p>
+@if (!mostrarPaginaPrincipal) {<section class="marketplace">
 
-    <app-custom-input
-    [inputLabel]="'¿A dónde quieres ir?'"
-    [inputType]="'text'"
-    [(value)]="destino"
-></app-custom-input>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-text">
+            <h1 class="title">MARKETPLACE</h1>
+            <p class="subtitle">Belong anywhere...</p>
+        </div>
+        <div class="header-actions">
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </header>
 
-<p>Buscando alojamiento en: {{ destino }}</p>
+    <!-- Barra de búsqueda -->
+    <div class="search-bar">
+        <input type="text" class="search-input" placeholder="Barra de búsqueda">
+        <button class="search-btn" aria-label="Buscar"></button>
+    </div>
 
-@for (item of propiedades; track item.id) {
-    <app-property-card [Propiedad]="item"></app-property-card>
-} @empty {
-    <p>No hay propiedades disponibles</p>
+    <!-- Filtros -->
+    <div class="filtros">
+        <button class="filtro-btn" (click)="onCasas()">Casas</button>
+        <button class="filtro-btn">Apartamentos</button>
+        <button class="filtro-btn">Rentar</button>
+        <button class="filtro-btn">Animales</button>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+        <img src="Bogota.jpg" alt="Bogotá">
+    </div>
+
+    <!-- Fila título -->
+    <div class="fila-titulo">
+        <h3 class="fila-label">Alojamientos destacados</h3>
+    </div>
+
+    <!-- Cards de destinos -->
+    <div class="cards-destinos">
+    @for (destino of destinosVisibles; track $index) {
+        <article class="card-destino">
+            <span class="card-tag top">{{ destino.ciudad }}</span>
+            <img [src]="destino.imagen" [alt]="destino.ciudad">
+            <span class="card-tag bottom">{{ destino.pais }}</span>
+        </article>
+
+    }
+    </div>
+    <a href="#" class="ver-mas" (click)="verMas(); $event.preventDefault()">Ver más...</a>
+    
+    </section>
+        }@else {
+    <app-houses-accommodations-page
+    (volver)="mostrarPaginaPrincipal = false">
+    </app-houses-accommodations-page>
 }
-
-    <img class = "fondo" src="entry.jpg" alt="Fondo de Bienvenida">
-</div>

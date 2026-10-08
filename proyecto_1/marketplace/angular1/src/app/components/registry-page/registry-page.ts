@@ -10,30 +10,177 @@ import { UserPage } from '../user-page/user-page';
 })
 export class RegistryPage {
   title: String = "REGISTRO";
-  subtitle: String = "Completa tu registro";
+  subtitle: String = "Completa tus datos";
+  mostrarUser: boolean = false;
 
-  // Información de contacto
-  nombreCompleto: String = "";
+  
+  // bloque "reservas" (los 2 recuadros)
+  reservaOpciones: string[] = ['Tarjeta', 'Pse', 'Bancario', 'Efectivo'];
+  tipoPagoSeleccionado: string | null = null;
+
+  
+  seleccionarReserva(opcion: string) {
+    this.tipoPagoSeleccionado = opcion;
+  }
+
+  //======bloque de registro======
+  // información de contacto
+  nombreCompleto: string = "";
   correo: String = "";
 
-  // Residencia 1
-  direccion1: String = "";
-  telefono1: String = "";
+  // residencia 1
+  ciudad: String = "";
+  zipCode: String = "";
 
-  // Residencia 2
-  direccion2: String = "";
-  telefono2: String = "";
+  // residencia 2
+  departamento: String = "";
+  telefono: String = "";
+  //=============================
 
-  // Método de pago
+  //======bloque de tarjeta======
   numeroTarjeta: String = "";
   fechaExp: String = "";
   cvv: String = "";
   nombreTarjeta: String = "";
+  //=========================
+  
+  //======bloque de pse======
+  // información de banco
+  nombreBanco: string = "";
+
+  // datos personales
+  nombreCliente: String = "";
+  id: String="";
+
+  // clave
+  claveTemporal: String = "";
+  //=========================
+
+
+  //======bloque de banco======
+  // información de banco
+  entidadBancaria: string = "";
+
+  // datos de cuenta
+  numeroCuenta: String = "";
+  nombreCuenta: String="";
+
+  // clave
+  claveCajero: String = "";
+  //======================
 
   
+  //======bloque de efectivo======
+  // información de banco
+  cantidadEfectivo: string = "";
+  //======================
+
+
+  // laas 2 tarjetas (método de pago u otra selección)
+  metodoPago: { seleccionado: boolean }[] = [
+    { seleccionado: true },
+    { seleccionado: false },
+  ];
+
+  seleccionarMetodo(index: number) {
+    this.metodoPago.forEach((m, i) => m.seleccionado = (i === index));
+  }
+
   onRegister() {
-    console.log('iniciar sesión');
+    if (!this.entidadBancaria || this.numeroCuenta){
+      console.warn('Faltan datos obligatorios');
+      return;
+    }
+    console.log('Datos enviados:', {
+      nombreCompleto: this.nombreCompleto,
+      correo: this.correo,
+      ciudad: this.ciudad,
+      zipCode: this.zipCode,
+      departamento: this.departamento,
+      telefono: this.telefono,
+      reservaSeleccionada: this.tipoPagoSeleccionado,
+      });
+
     this.mostrarUser = true;
   }
-  mostrarUser: boolean = false;
+
+    onTarjeta() {
+    if (!this.nombreBanco || this.nombreCliente){
+      console.warn('Faltan datos obligatorios');
+      return;
+    }
+    console.log('Tarjeta', {
+      numeroTarjeta: this.numeroTarjeta,
+      fechaExp: this.fechaExp,
+      cvv: this.cvv,
+      nombreTarjeta: this.nombreTarjeta,
+    });
+
+    this.mostrarUser = true;
+  }
+
+  
+    onPse() {
+    if (!this.nombreBanco || this.nombreCliente){
+      console.warn('Faltan datos obligatorios');
+      return;
+    }
+    console.log('Datos enviados:', {
+      nombreBanco: this.nombreBanco,
+      nombreCliente: this.nombreCliente,
+      id: this.id,
+      claveTemporal: this.claveTemporal,
+    });
+
+    this.mostrarUser = true;
+  }
+
+    onBancario() {
+    if (!this.entidadBancaria){
+      console.warn('Faltan datos obligatorios');
+      return;
+    }
+    console.log('Datos enviados:', {
+      numeroCuenta: this.numeroCuenta,
+      nombreCuenta: this.nombreCuenta,
+      claveCajero: this.claveCajero,
+    });
+
+    this.mostrarUser = true;
+  }
+
+  
+    onEfectivo() {
+    if (!this.cantidadEfectivo){
+      console.warn('Faltan datos obligatorios');
+      return;
+    }
+    console.log('Datos enviados:', {
+      nombreCliente: this.nombreCliente,
+      cantidadEfectivo: this.cantidadEfectivo,
+    });
+
+    this.mostrarUser = true;
+  }
+
+  onConfirmar() {
+  switch (this.tipoPagoSeleccionado) {
+    case 'Tarjeta':
+      this.onTarjeta();
+      break;
+    case 'Pse':
+      this.onPse();
+      break;
+    case 'Bancario':
+      this.onBancario();
+      break;
+    case 'Efectivo':
+      this.onEfectivo();
+      break;
+    default:
+      console.warn('Selecciona un método de pago');
+    return;
+    }
+    this.mostrarUser = true;
+  }
 }

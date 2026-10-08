@@ -1,0 +1,48 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
+
+@if (!mostrarOnHouses) {
+<section class="registro">
+
+    <!-- Filtros -->
+    <div class="filtros">
+    @for (cat of categorias; track cat) {
+        <button
+            class="filtro-btn"
+            [class.selected]="categoriaActiva === cat"
+            (click)="seleccionarCategoria(cat)">
+            {{ cat }}
+        </button>
+    }
+</div>
+
+<!-- Cards -->
+<div class="cards-destinos">
+    @for (destino of destinosFiltrados; track $index) {
+        <article class="card-destino">
+            <span class="card-tag top-right">{{ destino.precio }}</span>
+            <span class="card-tag top-left rating">☆ {{ destino.calificacion }}</span>
+
+            <img [src]="destino.imagen" [alt]="destino.ciudad">
+
+            <div class="card-info">
+                <span class="card-tag name">{{ destino.nombre }}</span>
+                <span class="card-tag location">{{ destino.pais }}</span>
+            </div>
+        </article>
+    } @empty {
+        <p class="sin-resultados">Por favor seleccione una categoría.</p>
+    }
+</div>
+
+    <div class="fila-titulo">
+    <a href="#" class="ver-mas">Ver más...</a>
+    </div>
+
+</section>
+} @else {
+    <app-houses-accommodations-page
+    (volver)="mostrarOnHouses = false">
+    </app-houses-accommodations-page>
+}
