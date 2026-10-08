@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { WelcomePage } from './components/welcome-page/welcome-page';
+import { RouterOutlet } from '@angular/router';
+import { BottomNav } from './components/bottom-nav/bottom-nav';
 
 @Component({
-  imports: [WelcomePage],  
-  selector: 'app-root',
-  styleUrl: './app.css',
-  templateUrl: './app.html',
+    selector: 'app-root',
+    standalone: true,
+    imports: [RouterOutlet, BottomNav],
+    templateUrl: './app.html',
+    styleUrl: './app.css'
 })
-export class App {
-  
-}
+export class App { }

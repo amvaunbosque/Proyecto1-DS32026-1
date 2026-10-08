@@ -1,0 +1,206 @@
+:host{
+    font-family: 'Funnel Sans', sans-serif;
+    display: block;
+}
+
+.registro {
+    max-width: 90rem; /*lo que hace que el btn sea más ancho*/
+    margin: 4rem auto 0 auto; 
+    text-align: left; 
+    padding-bottom: 4rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.text-complement {
+    font-size: 1.02rem;
+    max-width: 30rem ;
+    margin: 3rem 0 0.5rem 0;
+    color: #000;
+}
+
+.filtros {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.filtro-btn {
+    flex: 1 ;
+    height: 4.25rem;
+    border: none;
+    border-radius: 0.375rem;
+
+    /*Efecto cristal tipoo ipon*/
+    background-color: rgba(215, 225, 170, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+        /*Sombra prominente*/
+        box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.15),
+                    0 0.125rem 0.5rem rgba(0, 0, 0, 0.05),
+                    inset 0 1px 1px rgba(255, 255, 255, 0.55),   /* brillo superior */
+                    inset 0 -1px 1px rgba(255, 255, 255, 0.15);  /* brillo inferior */
+    color: #3E563E;
+    font-family: inherit;
+    font-size: 1.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem;
+    white-space: normal;
+    line-height: 1.15;
+    transition: background 0.2s ease, box-shadow 0.25s ease, transform 0.15s ease;
+}
+
+.filtro-btn:hover {
+background: rgba(255, 255, 255, 0.32);
+    box-shadow:
+        0 0.75rem 2.5rem rgba(0, 0, 0, 0.18),
+        0 0.125rem 0.5rem rgba(0, 0, 0, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.7),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.2);;
+}
+
+.filtro-btn:active {
+    transform: translateY(1px);
+}
+
+.filtro-btn.selected {
+    background: rgba(76, 107, 79, 0.85); /* tu verde pero translúcido */
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(14px) saturate(160%);
+}
+
+.filtro-btn.selected {
+    background: #4C6B4F;
+    color: #fff;
+}
+
+.fila-titulo { /*fila itutlo + ver más*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.ver-mas {
+    font-size: 0.75rem;
+    color: #1a1a1a;
+    text-decoration: none;
+    background: #CBD3D8;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.ver-mas:hover {
+    background: #A8B4BA;
+}
+
+.card-info {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    display: flex;
+    flex-direction: column;   /* apila verticalmente */
+    gap: 0.25rem;             /* separación entre ellos */
+    align-items: flex-start;  /* pegados a la izquierda */
+    z-index: 2;
+}
+
+/* los spans dentro del contenedor ya NO son absolute */
+.card-info .card-tag {
+    position: static;
+}
+
+.cards-destinos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /*esto hace que sean las 2 columnas y se repita tantas veces tenga elementos*/
+    gap: 0.75rem;
+}
+
+.card-destino {
+    margin-top: 2rem;
+    position: relative;
+    aspect-ratio: 4 / 3; /*para que se vean má cuadrados como en el mockup*/
+    border-radius: 0.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    background: #000;
+}
+
+.card-destino img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.card-destino:hover img {
+    transform: scale(1.05);
+}
+
+.card-destino::after{
+    content: '';/*obligatorio para uqe le pseudo elemento exista*/
+    position: absolute;
+    left: 0; /*para que se vean má cuadrados como en el mockup*/
+    right: 0;
+    bottom: 0;
+    height: 30%;
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.95) 0%, /*abao negr casi solido*/
+        rgba(0,0,0,0.7) 40%,/*medio negro semitrasnparente*/
+        rgba(0,0,0,0) 100%/*arriba transparente*/
+    );
+    z-index: 1;/*debajo de los tangs aparece la imagen*/
+    pointer-events: none;/*que no bloquee clics*/
+}
+
+.card-tag { /*la informaciónd que está en la cajita, a la derecha*/
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    color:#ffd966;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 1.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    z-index: 2; /*propiedad que controla el orden de apilamiento de lo elementos superpuestos en el eje de profunciddad*/
+}
+
+.card-tag.top-right {
+    top: 2.3rem;
+    right: 1.8rem;
+}
+
+.card-tag.top-left {
+    top: 2.3rem;
+    left: 1.8rem;
+}
+
+.card-tag.name {
+    background: transparent;   /* sin fondo, como en el mockup */
+    color: #fff;
+    font-size: 3.85rem;
+    font-weight: 700;
+    padding: 0;
+    margin-left: 0.6rem;
+
+}
+
+.card-tag.location {
+    background: transparent;
+    color: #e0e0e0;
+    font-size: 1.7rem;
+    font-weight: 400;
+    padding: 0;
+    margin-left: 1.2rem;
+    margin-bottom: 0.6rem;
+}
+
+.card-tag.rating {
+    background: rgba(0, 0, 0, 0.7);
+    color:#ffd966;
+}

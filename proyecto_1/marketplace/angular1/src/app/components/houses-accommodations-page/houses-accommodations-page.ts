@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Location } from '@angular/common';
 
 interface Destino{
   nombre: string;
@@ -12,12 +13,17 @@ interface Destino{
 
 @Component({
   selector: 'app-houses-accommodations-page',
+  standalone: true,
   styleUrl: './houses-accommodations-page.css',
   templateUrl: './houses-accommodations-page.html',
 })
 
 export class HousesAccommodationsPage {
-@Output() volver = new EventEmitter<void>();
+
+constructor(private location: Location){}
+volver(){
+  this.location.back();
+}
 
 mostrarOnHouses: boolean = false;
 
@@ -59,10 +65,6 @@ get destinosFiltrados(): Destino[] {
   seleccionarCategoria(cat: string) {
     this.categoriaActiva = cat;
   }
-
-onVolver(){
-  this.volver.emit();
-}
 
 onHouses(){
   console.log('houses');

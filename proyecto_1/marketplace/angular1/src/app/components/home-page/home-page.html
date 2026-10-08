@@ -1,77 +1,56 @@
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
+<section class="registro">
+    <section class="marketplace">
 
-@switch (tipoVista) {
-
-    @case ('marketplace') {
-        <section class = "registro">
-        <section class="marketplace">
-
-            <!-- Header -->
-            <header class="header">
-                <div class="header-text">
-                    <h1 class="title">MARKETPLACE</h1>
-                    <p class="subtitle">Belong anywhere...</p>
-                </div>
-                <div class="header-actions">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-            </header>
-
-            <!-- Barra de búsqueda -->
-            <div class="search-bar">
-                <input type="text" class="search-input" placeholder="Barra de búsqueda">
-                <button class="search-btn" aria-label="Buscar"></button>
+        <!-- Header -->
+        <header class="header">
+            <div class="header-text">
+                <h1 class="title">MARKETPLACE</h1>
+                <p class="subtitle">Belong anywhere...</p>
             </div>
-
-            <!-- Filtros -->
-            <div class="filtros">
-                <button class="filtro-btn" (click)="onCasas()">Casas</button>
-                <button class="filtro-btn" (click)="onApartments()">Apartamentos</button>
-                <button class="filtro-btn">Rentar</button>
-                <button class="filtro-btn">Animales</button>
+            <div class="header-actions">
+                <span class="dot"></span>
+                <span class="dot"></span>
             </div>
+        </header>
 
-            <!-- Hero -->
-            <div class="hero">
-                <img src="Bogota.jpg" alt="Bogotá">
-            </div>
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Barra de búsqueda">
+            <button class="search-btn" aria-label="Buscar"></button>
+        </div>
 
-            <!-- Fila título -->
-            <div class="fila-titulo">
-                <h3 class="fila-label">Alojamientos destacados</h3>
-            </div>
+        <!-- Filtros: ahora navegan con routerLink -->
+        <div class="filtros">
+            <button class="filtro-btn" (click)="irAFiltro  ('casas')">Casas</button>
+            <button class="filtro-btn" (click)="irAFiltro  ('apartamentos')">Apartamentos</button>
+            <button class="filtro-btn" (click)="irAFiltro  ('rentar')">Rentar</button>
+            <button class="filtro-btn" (click)="irAFiltro  ('animales')">Animales</button>
+        </div>
 
-            <!-- Cards de destinos -->
-            <div class="cards-destinos">
-                @for (destino of destinosVisibles; track $index) {
-                    <article class="card-destino">
-                        <span class="card-tag top">{{ destino.ciudad }}</span>
-                        <img [src]="destino.imagen" [alt]="destino.ciudad">
-                        <span class="card-tag bottom">{{ destino.pais }}</span>
-                    </article>
-                }
-            </div>
+        <!-- Hero -->
+        <div class="hero">
+            <img src="Bogota.jpg" alt="Bogotá">
+        </div>
 
-            <a href="#" class="ver-mas" (click)="verMas(); $event.preventDefault()">
-                Ver más...
-            </a>
+        <!-- Fila título -->
+        <div class="fila-titulo">
+            <h3 class="fila-label">Alojamientos destacados</h3>
+        </div>
 
-        </section>
-        </section>
-    }
+        <!-- Cards -->
+        <div class="cards-destinos">
+            @for (destino of destinosVisibles; track $index) {
+                <article class="card-destino">
+                    <span class="card-tag top">{{ destino.ciudad }}</span>
+                    <img [src]="destino.imagen" [alt]="destino.ciudad">
+                    <span class="card-tag bottom">{{ destino.pais }}</span>
+                </article>
+            }
+        </div>
 
-    @case ('casas') {
-        <app-houses-accommodations-page
-            (volver)="onMarketplace()">
-        </app-houses-accommodations-page>
-    }
+        <a href="#" class="ver-mas" (click)="verMas(); $event.preventDefault()">
+            Ver más...
+        </a>
 
-    @case ('apartamentos') {
-        <app-apartments-accommodations-page
-            (volver)="onMarketplace()">
-        </app-apartments-accommodations-page>
-    }
-}
+    </section>
+</section>

@@ -2,10 +2,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
 
-@if (!mostrarOnHouses) {
+@if (!mostrarOnAnimals) {
 <section class="registro">
 
-    <button class="filtro-btn" (click)="volver()">← Volver</button>
     <!-- Filtros -->
     <div class="filtros">
     @for (cat of categorias; track cat) {
@@ -43,7 +42,7 @@
 
 </section>
 } @else {
-    <app-houses-accommodations-page
-    (volver)="mostrarOnHouses = false">
-    </app-houses-accommodations-page>
+    <app-animals-accommodations-page
+    (volver)="mostrarOnAnimals = false">
+    </app-animals-accommodations-page>
 }
