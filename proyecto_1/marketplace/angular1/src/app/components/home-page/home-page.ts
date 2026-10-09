@@ -17,11 +17,11 @@ interface Destino {
 })
 export class HomePage {
 
-  constructor(private router: Router){}
+    constructor(private router: Router){}
 
-  irAFiltro(tipo: string): void{
-    this.router.navigate(['/filter'], {queryParams:{tipo}});
-  }
+    irAFiltro(tipo: string): void {
+        this.router.navigate(['/filter'], { queryParams: { tipo } });
+}
 
     destinos: Destino[] = [
         { ciudad: 'New York, NY',                   pais: 'United States of America',    imagen: 'NY City.jpg' },

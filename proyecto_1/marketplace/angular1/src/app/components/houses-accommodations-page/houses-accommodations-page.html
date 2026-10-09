@@ -2,48 +2,36 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
 
-@if (!mostrarOnHouses) {
 <section class="registro">
+  <button class="filtro-btn" (click)="volver()">← Volver</button>
 
-    <button class="filtro-btn" (click)="volver()">← Volver</button>
-    <!-- Filtros -->
-    <div class="filtros">
+  <div class="filtros">
     @for (cat of categorias; track cat) {
-        <button
-            class="filtro-btn"
-            [class.selected]="categoriaActiva === cat"
-            (click)="seleccionarCategoria(cat)">
-            {{ cat }}
-        </button>
+      <button class="filtro-btn" [class.selected]="categoriaActiva === cat" (click)="seleccionar(cat)">
+        {{ cat }}
+      </button>
     }
-</div>
+  </div>
 
-<!-- Cards -->
-<div class="cards-destinos">
-    @for (destino of destinosFiltrados; track $index) {
-        <article class="card-destino">
-            <span class="card-tag top-right">{{ destino.precio }}</span>
-            <span class="card-tag top-left rating">☆ {{ destino.calificacion }}</span>
-
-            <img [src]="destino.imagen" [alt]="destino.ciudad">
-
-            <div class="card-info">
-                <span class="card-tag name">{{ destino.nombre }}</span>
-                <span class="card-tag location">{{ destino.pais }}</span>
-            </div>
-        </article>
+  <div class="cards-destinos">
+    @for (a of visibles; track a.id) {
+      <article class="card-destino" [routerLink]="['/detalle/casas', a.id]">
+        <span class="card-tag top-right">{{ a.precio }}</span>
+        <span class="card-tag top-left rating">☆ {{ a.calificacion }}</span>
+        <img [src]="a.imagen" [alt]="a.nombre">
+        <div class="card-info">
+          <span class="card-tag name">{{ a.nombre }}</span>
+          <span class="card-tag location">{{ a.ciudad }}, {{ a.pais }}</span>
+        </div>
+      </article>
     } @empty {
-        <p class="sin-resultados">Por favor seleccione una categoría.</p>
+      <p>No hay alojamientos en esta categoría.</p>
     }
-</div>
+  </div>
 
+  @if (visibles.length < filtrados.length) {
     <div class="fila-titulo">
-    <a href="#" class="ver-mas">Ver más...</a>
+      <a href="#" class="ver-mas" (click)="verMas(); $event.preventDefault()">Ver más...</a>
     </div>
-
+  }
 </section>
-} @else {
-    <app-houses-accommodations-page
-    (volver)="mostrarOnHouses = false">
-    </app-houses-accommodations-page>
-}

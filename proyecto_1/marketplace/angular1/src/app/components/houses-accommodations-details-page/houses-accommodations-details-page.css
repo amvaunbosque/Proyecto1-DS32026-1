@@ -1,0 +1,155 @@
+:host {
+  display: block;
+  font-family: 'Funnel Sans', sans-serif;
+  background: #F2F6FA;
+  color: #1a1a1a;
+}
+
+.detalle {
+  max-width: 45rem;
+  margin: 0 auto;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.volver {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  border: none;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  background: rgba(255, 255, 255, 0.9);
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.contenido {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tag {
+  align-self: flex-start;
+  background: #CBD3D8;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.titulo {
+  font-family: 'Dela Gothic One', sans-serif;
+  font-size: 1.75rem;
+  margin: 0;
+  color: #000;
+}
+
+.ubicacion {
+  margin: 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.miniatura {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: 3px solid transparent;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.miniatura.activa {
+  border-color: #4C6B4F;
+}
+
+.seccion {
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.descripcion {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.detalles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.detalles li {
+  background: #CBD3D8;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.detalles strong {
+  display: block;
+  font-size: 1.1rem;
+}
+
+.reserva {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.precio {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.precio strong {
+  font-size: 1.1rem;
+}
+
+.reservar {
+  flex: 1;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.9rem;
+  background: #4C6B4F;
+  color: #fff;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.reservar:hover {
+  background: #3F5B40;
+}

@@ -1,0 +1,102 @@
+:host {
+    display: block;
+    font-family: 'Funnel Sans', sans-serif;
+    background-color: #F2F6FA;
+    min-height: 100vh; /* Asegura que el fondo cubra toda la pantalla */
+    padding: 2rem 1rem; /* Un poco de aire en los bordes */
+}
+
+/* Contenedor principal */
+.registro {
+    max-width: 60rem; /* Aumenté el ancho para que los componentes hijos tengan más espacio */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Más espacio entre secciones */
+}
+
+/* Sección de encabezado */
+.header-section {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.header {
+    font-family: 'Dela Gothic One', sans-serif;
+    font-size: 3rem; /* Reduje un poco el tamaño para que no sea tan gigante */
+    color: #1a1a1a;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.2;
+}
+
+.subtitle-description {
+    font-size: 1.1rem;
+    color: #555;
+    margin: 0;
+    max-width: 40rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-title {
+    text-align: left;
+    margin-top: 2rem;
+}
+
+.residencias, .pago-fila {
+    display: flex;
+    gap: 1rem;
+}
+
+.residencias > div {
+    flex: 1;
+}
+
+.opciones-fila {
+    text-align: center;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.opcion-box {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+
+    min-width: 6rem;
+    height: 10rem;
+    border-radius: 0.625rem;
+    background: #93A889;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.opcion-box:hover {
+    color: #fbf9f9;
+}
+
+.opcion-box.selected {
+    background: #3E563E;
+    color: #fff;
+}
+
+.pago-fila > app-custom-input {
+    flex: 1;
+}
+
+app-button { /*sin punto es selecitor de tipo (etiqueta o elemento)*/
+    display: block;
+    width: fit-content;
+    margin: 1.5rem auto 0;
+}
+
+/* Estilos para los componentes hijos (si necesitas forzar algo) */
+app-houses-accommodations-page,
+app-apartments-accommodations-page,
+app-animals-accommodations-page,
+app-rentals-accommodations-page {
+    display: block;
+    width: 100%;
+}

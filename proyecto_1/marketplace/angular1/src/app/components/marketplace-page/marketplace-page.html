@@ -1,0 +1,38 @@
+<!-- houses-accommodations-page.html -->
+<section class="marketplace">
+  <button class="volver" (click)="volver()">← Volver</button>
+
+  <header class="header">
+    <h1 class="title">{{ titulo }}</h1>
+  </header>
+
+  <div class="filtros">
+    @for (cat of categorias; track cat) {
+      <button 
+        class="filtro-btn" 
+        [class.selected]="categoriaActiva === cat" 
+        (click)="seleccionar(cat)">
+        {{ cat }}
+      </button>
+    }
+  </div>
+
+  <div class="cards-destinos">
+    @for (a of visibles; track a.id) {
+      <!-- ✅ AQUÍ el routerLink que faltaba -->
+      <article class="card-destino" [routerLink]="['/detalles', a.id]">
+        <span class="card-tag top">{{ a.nombre }}</span>
+        <img [src]="a.imagen" [alt]="a.nombre">
+        <span class="card-tag bottom">{{ a.ciudad }} · {{ a.precio }}</span>
+      </article>
+    } @empty {
+      <p class="empty">No hay alojamientos en esta categoría.</p>
+    }
+  </div>
+
+  @if (visibles.length < filtrados.length) {
+    <a href="#" class="ver-mas" (click)="verMas(); $event.preventDefault()">
+      Ver más...
+    </a>
+  }
+</section>

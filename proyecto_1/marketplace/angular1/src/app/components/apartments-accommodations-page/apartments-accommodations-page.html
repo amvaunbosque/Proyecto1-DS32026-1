@@ -4,7 +4,7 @@
 
 @if (!mostrarOnApartments) {
 <section class="registro">
-
+        <button class="filtro-btn" (click)="volver()">← Volver</button>
     <!-- Filtros -->
     <div class="filtros">
     @for (cat of categorias; track cat) {

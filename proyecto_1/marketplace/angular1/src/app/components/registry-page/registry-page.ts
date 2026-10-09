@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter} from '@angular/core';
 import { CustomInput } from '../custom-input/custom-input';
 import { Button } from '../button/button';
-import { UserPage } from '../user-page/user-page';
+import { HomePage } from '../home-page/home-page';
 @Component({
-  imports: [CustomInput, Button, UserPage],
+  imports: [CustomInput, Button, HomePage],
   selector: 'app-registry-page',
   styleUrl: './registry-page.css',
   templateUrl: './registry-page.html',
@@ -11,7 +11,7 @@ import { UserPage } from '../user-page/user-page';
 export class RegistryPage {
   title: String = "REGISTRO";
   subtitle: String = "Completa tus datos";
-  mostrarUser: boolean = false;
+  mostrarHome: boolean = false;
 
   
   // bloque "reservas" (los 2 recuadros)
@@ -101,7 +101,7 @@ export class RegistryPage {
       reservaSeleccionada: this.tipoPagoSeleccionado,
       });
 
-    this.mostrarUser = true;
+    this.mostrarHome = true;
   }
 
     onTarjeta() {
@@ -116,7 +116,7 @@ export class RegistryPage {
       nombreTarjeta: this.nombreTarjeta,
     });
 
-    this.mostrarUser = true;
+    this.mostrarHome = true;
   }
 
   
@@ -132,7 +132,7 @@ export class RegistryPage {
       claveTemporal: this.claveTemporal,
     });
 
-    this.mostrarUser = true;
+    this.mostrarHome = true;
   }
 
     onBancario() {
@@ -146,7 +146,7 @@ export class RegistryPage {
       claveCajero: this.claveCajero,
     });
 
-    this.mostrarUser = true;
+    this.mostrarHome = true;
   }
 
   
@@ -160,7 +160,7 @@ export class RegistryPage {
       cantidadEfectivo: this.cantidadEfectivo,
     });
 
-    this.mostrarUser = true;
+    this.mostrarHome = true;
   }
 
   onConfirmar() {
@@ -181,6 +181,6 @@ export class RegistryPage {
       console.warn('Selecciona un método de pago');
     return;
     }
-    this.mostrarUser = true;
+    this.mostrarHome = true;
   }
 }

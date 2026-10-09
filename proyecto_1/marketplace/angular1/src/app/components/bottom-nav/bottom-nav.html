@@ -1,31 +1,8 @@
-<nav class="bottom-nav">
-
-    <a routerLink="/home"
-       routerLinkActive="active"
-       class="nav-item">
-        <span class="icon">🏠</span>
-        <span class="label">Home</span>
+<nav class="barra">
+  @for (item of items; track item.ruta) {
+    <a [routerLink]="item.ruta" routerLinkActive="active" class="nav-item">
+      <span class="icon">{{ item.icono }}</span>
+      <span class="label">{{ item.texto }}</span>
     </a>
-
-    <a routerLink="/filter"
-       routerLinkActive="active"
-       class="nav-item">
-        <span class="icon">🔍</span>
-        <span class="label">Search</span>
-    </a>
-
-    <a routerLink="/bookings"
-       routerLinkActive="active"
-       class="nav-item">
-        <span class="icon">📅</span>
-        <span class="label">Bookings</span>
-    </a>
-
-    <a routerLink="/user"
-       routerLinkActive="active"
-       class="nav-item">
-        <span class="icon">👤</span>
-        <span class="label">Profile</span>
-    </a>
-
+  }
 </nav>

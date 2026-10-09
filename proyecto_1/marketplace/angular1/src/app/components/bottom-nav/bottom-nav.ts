@@ -2,10 +2,16 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-    selector: 'app-bottom-nav',
-    standalone: true,
     imports: [RouterLink, RouterLinkActive],
+    selector: 'app-bottom-nav',
+    styleUrl: './bottom-nav.css',
     templateUrl: './bottom-nav.html',
-    styleUrl: './bottom-nav.css'
 })
-export class BottomNav { }
+export class BottomNav {
+    items = [
+    { ruta: '/home', icono: '🏠', texto: 'Home' },
+    { ruta: '/filter', icono: '🔍', texto: 'Search' },
+    { ruta: '/bookings', icono: '📅', texto: 'Bookings' },
+    { ruta: '/user', icono: '👤', texto: 'Profile' },
+    ];
+}

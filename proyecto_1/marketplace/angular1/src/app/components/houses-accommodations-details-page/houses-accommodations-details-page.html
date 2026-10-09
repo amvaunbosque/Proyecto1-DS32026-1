@@ -1,0 +1,50 @@
+@if (alojamiento) {
+  <section class="detalle">
+
+    <div class="hero">
+      <img [src]="imagenPrincipal" [alt]="alojamiento.nombre">
+      <button class="volver" (click)="volver()">← Volver</button>
+    </div>
+
+    <div class="contenido">
+      <span class="tag">{{ alojamiento.categorias }}</span>
+      <h1 class="titulo">{{ alojamiento.nombre }}</h1>
+      <p class="ubicacion">{{ alojamiento.ciudad }}</p>
+
+      <span class="tag">{{ alojamiento.categorias.join(', ') }}</span>
+      <p class="precio"><strong>{{ alojamiento.precio }}</strong> / noche</p>
+
+      <div class="galeria">
+        @for (img of alojamiento.imagenes ?? []; track $index) {
+          <img
+            class="miniatura"
+            [src]="img"
+            [alt]="alojamiento.nombre"
+            [class.activa]="img === imagenPrincipal"
+            (click)="seleccionarImagen(img)">
+        }
+      </div>
+
+      <h3 class="seccion">Descripción</h3>
+      <p class="descripcion">{{ alojamiento.descripcion }}</p>
+
+      <h3 class="seccion">Detalles</h3>
+      <ul class="detalles">
+        <li><strong>{{ alojamiento.habitaciones ?? '-' }}</strong> Habitaciones</li>
+        <li><strong>{{ alojamiento.banos ?? '-' }}</strong> Baños</li>
+        <li><strong>{{ alojamiento.area ?? '-' }}</strong> m²</li>
+      </ul>
+
+      <div class="reserva">
+        <p class="precio"><strong>{{ alojamiento.precio | number }}</strong> / noche</p>
+        <button class="reservar" (click)="reservar()">Reservar</button>
+      </div>
+    </div>
+
+  </section>
+} @else {
+  <section class="detalle contenido">
+    <p>No encontramos este alojamiento.</p>
+    <button class="reservar" (click)="volver()">← Volver</button>
+  </section>
+}

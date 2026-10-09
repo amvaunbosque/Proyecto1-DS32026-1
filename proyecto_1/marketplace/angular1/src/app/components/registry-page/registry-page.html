@@ -2,7 +2,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
 
-@if (!mostrarUser) {
+@if (!mostrarHome) {
 <section class= "registro">
     <h1 class="header"> {{title}}</h1> <!--se utiliza para declarar y conectar el bloque del css para el titulo -->
     <h3 class = "subtitle-description"> {{ subtitle }}</h3>
@@ -77,5 +77,5 @@
     </section>
 
 }@else {
-    <app-user-page></app-user-page>
+    <app-home-page></app-home-page>
 }

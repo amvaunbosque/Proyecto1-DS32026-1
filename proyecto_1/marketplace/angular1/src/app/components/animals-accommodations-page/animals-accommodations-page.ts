@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Location } from '@angular/common';
 
 interface Destino{
   nombre: string;
@@ -17,11 +18,16 @@ interface Destino{
 })
 
 export class AnimalsAccommodationsPage {
-@Output() volver = new EventEmitter<void>();
+
+  constructor(private location: Location){}
+volver(){
+  this.location.back();
+}
 
 mostrarOnAnimals: boolean = false;
 
-categoriaActiva: string = 'animals';
+categoriaActiva: string = '';
+
 categorias: string[] = [
   'Guarderia',
   'Con entrenamiento',
@@ -37,7 +43,7 @@ destinos : Destino[] = [
 
 
 get destinosFiltrados(): Destino[] {
-    if (this.categoriaActiva === 'Animals') {
+    if (this.categoriaActiva === ' ') {
       return this.destinos;  // muestra todos
     }
     return this.destinos.filter(d =>
@@ -46,12 +52,8 @@ get destinosFiltrados(): Destino[] {
   }
 
   seleccionarCategoria(cat: string) {
-    this.categoriaActiva = cat;
+    this.categoriaActiva = this.categoriaActiva === cat ? '': cat;
   }
-
-onVolver(){
-  this.volver.emit();
-}
 
 onAnimals(){
   console.log('animals');
