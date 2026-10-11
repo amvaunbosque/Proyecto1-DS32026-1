@@ -1,4 +1,4 @@
-export interface Propiedad {
+export interface Propiedad { //interface de lso datos de prropiedad
     id: number;
     nombre: string;
     ciudad: string;
@@ -6,7 +6,7 @@ export interface Propiedad {
     disponible: boolean;
 }
 
-export interface Alojamiento {
+export interface Alojamiento { //información complementaria
     id: number;
     nombre: string;
     calificacion: string;
@@ -15,7 +15,7 @@ export interface Alojamiento {
     precio: string;
     imagen: string;
     categorias: string[];
-    descripcion?: string;
+    descripcion?: string; //el ? siginifca que puede existir con un string o es opcional
     habitaciones?: number;
     banos?: number;
     area?: number;

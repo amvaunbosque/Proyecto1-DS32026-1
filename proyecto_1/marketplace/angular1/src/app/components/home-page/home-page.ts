@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
+//declaracio de objretos
 interface Destino {
     ciudad: string;
     pais: string;
@@ -15,14 +16,17 @@ interface Destino {
     templateUrl: './home-page.html',
     styleUrl: './home-page.css',
 })
+
 export class HomePage {
 
+//inyecta el servivio router para poder navegar
     constructor(private router: Router){}
 
-    irAFiltro(tipo: string): void {
+    irAFiltro(tipo: string): void { //navega a la ruta /filter pasando el parámetro
         this.router.navigate(['/filter'], { queryParams: { tipo } });
 }
 
+//bloque de los airbnb disponibles
     destinos: Destino[] = [
         { ciudad: 'New York, NY',                   pais: 'United States of America',    imagen: 'NY City.jpg' },
         { ciudad: 'Miami, USA',                     pais: 'United States of America',    imagen: 'Miami.jpg' },
@@ -35,16 +39,18 @@ export class HomePage {
         { ciudad: 'Estambul, Estrecho del Bósforo', pais: 'Turquía',                      imagen: 'Istambul.jpg' },
     ];
 
-    limiteVisibles = 2;
+    limiteVisibles = 3; //cantidad de destinos que se ven en el grid
 
     get destinosVisibles(): Destino[] {
         return this.destinos.slice(0, this.limiteVisibles);
     }
 
-    verMas(): void {
+    verMas(): void { //devuleve solo los primeros "limitesVisibles" destnos
         this.limiteVisibles += 3;
         if (this.limiteVisibles > this.destinos.length) {
             this.limiteVisibles = this.destinos.length;
         }
     }
+    
 }
+

@@ -28,15 +28,16 @@
 
 .filtro-btn {
     flex: 1 ;
+    width: 12rem;
     height: 4.25rem;
     border: none;
     border-radius: 0.375rem;
 
-    /*Efecto cristal tipoo ipon*/
+    /*efecto cristal tipoo ipon*/
     background-color: rgba(215, 225, 170, 0.25);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(14px) saturate(160%);
-        /*Sombra prominente*/
+        /*sombra prominente*/
         box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.15),
                     0 0.125rem 0.5rem rgba(0, 0, 0, 0.05),
                     inset 0 1px 1px rgba(255, 255, 255, 0.55),   /* brillo superior */
@@ -66,7 +67,7 @@ background: rgba(255, 255, 255, 0.32);
 }
 
 .filtro-btn.selected {
-    background: rgba(76, 107, 79, 0.85); /* tu verde pero translúcido */
+    background: rgba(76, 107, 79, 0.85); 
     color: #fff;
     border-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(14px) saturate(160%);

@@ -4,12 +4,7 @@
 <!-- Contenedor principal que centra y da estilo a todo -->
 <div class="registro">
     
-    <!-- Encabezado y título (opcional, si quieres que aparezca siempre) -->
-    <div class="header-section">
-        <h1 class="header">ALOJAMIENTOS</h1>
-        <p class="subtitle-description">Encuentra el lugar perfecto para ti</p>
-    </div>
-
+    
     <!-- Contenido dinámico según el tipo -->
     <div class="content-section">
         @switch (tipo) {
@@ -24,21 +19,25 @@
             }
             @default { 
                 <div class="empty-state">
-                    <p class="subtitle-description">Elige un tipo de alojamiento para comenzar</p>
-                </div>
-            }
-        }
+                    <!-- Encabezado y título (opcional, si quieres que aparezca siempre) -->
+    <div class="header-section">
+        <h1 class="header">ALOJAMIENTOS</h1>
+        <p class="subtitle-description">Encuentra el lugar perfecto para ti</p>
     </div>
+
+    <p class="subtitle-description">Elige un tipo de alojamiento para comenzar</p>
 
     <h3 class = "text-complement">Información de contacto</h3>
     <app-custom-input [inputLabel]="'Nombre completo'" [inputType]="'text'" [inputClass]="'name'" [(value)]="nombreCompleto"></app-custom-input>
     <app-custom-input [inputLabel]="'Dirección de correo'" [inputType]="'email'" [inputClass]="'mail'" [(value)]="correo"></app-custom-input>
 
+    <!-- 3.2 busqueda y filtrado -->
+    <!-- ========================-->
     <div class="residencias">
     <div>
         <h4 class = "section-title">Preferencias del alojamiento</h4>
         <app-custom-input [inputLabel]="'Ciudad'" [inputType]="'text'" [(value)]="ciudad"></app-custom-input>
-        <app-custom-input [inputLabel]="'Número de huespedes'" [inputType]="'numb'" [(value)]="nHuespedes"></app-custom-input>
+        <app-custom-input [inputLabel]="'Número de huespedes'" [inputType]="'number'" [(value)]="nHuespedes"></app-custom-input>
     </div>
     <div>
         <h4 class = "section-title">Preferencias del alojamiento</h4>
@@ -46,8 +45,14 @@
         <app-custom-input [inputLabel]="'Precio maximo'" [inputType]="'text'" [(value)]="precioMaximo"></app-custom-input>
     </div>
 </div>
+    <!-- ========================-->
 
-    <app-button [textButton]="'Confirmar datos'" [variant]="'base-button'" (buttonClick)="onConfirmar()"></app-button>
-    <app-button [textButton]="'Limpiar filtro'" [variant]="'base-button'" (buttonClick)="onConfirmar()"></app-button>
+    <app-button [textButton]="'Confirmar datos'" [variant]="'base-button'" (buttonClick)="onFilter()"></app-button>
+    <app-button [textButton]="'Limpiar filtro'" [variant]="'base-button'" (buttonClick)="onClean()"></app-button>
 
+
+                </div>
+            }
+        }
+    </div>
 </div>

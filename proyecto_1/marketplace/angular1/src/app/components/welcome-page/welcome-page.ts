@@ -8,7 +8,7 @@ import { RegistryPage } from '../registry-page/registry-page';
   styleUrl: './welcome-page.css',
   templateUrl: './welcome-page.html',
 })
-export class WelcomePage {
+export class WelcomePage {//declaración de objetos
   title: String = "BIENVENIDO";
   subtitle: String = "Encuentra tu próximo lugar, siéntete en casa";
 

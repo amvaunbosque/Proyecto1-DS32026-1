@@ -1,62 +1,51 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { Location } from '@angular/common';
-
-interface Destino{
-  nombre: string;
-  calificacion: string;
-  ciudad: string;
-  pais:string;
-  precio: string;
-  imagen: string;
-  categorias: string[];
-}
+import { ANIMALES } from './../../core/data/data/animales';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { Alojamiento } from '../../core/model/model';
 
 @Component({
+  standalone: true,
   selector: 'app-animals-accommodations-page',
+  imports: [RouterLink],
   styleUrl: './animals-accommodations-page.css',
   templateUrl: './animals-accommodations-page.html',
 })
 
 export class AnimalsAccommodationsPage {
+  private router = inject(Router);
 
-  constructor(private location: Location){}
-volver(){
-  this.location.back();
-}
+   //propiedades de titulo y filtros
+  titulo = 'ANIMALES';
 
-mostrarOnAnimals: boolean = false;
+  //bloque de categorias que tiene los hospejades para oerros
+  categorias = ['Guarderia', 'Con entrenamiento', 'Con patio'];
+  categoriaActiva = 'Animales';
 
-categoriaActiva: string = '';
+  //solo se ven 2 a la vez
+  limiteVisibles = 2;
 
-categorias: string[] = [
-  'Guarderia',
-  'Con entrenamiento',
-  'Con patio'
-];
+  alojamientos: Alojamiento[] = ANIMALES;//lista completa de alojamientos de tipo casas
 
-destinos : Destino[] = [
-    { nombre: 'Paw Days', calificacion: '4.5', ciudad: 'Arequipa, Arequipa',     pais: 'Perú', precio: '360.000 COP', imagen: 'Paw Days.jpg' , categorias: ['Guarderia']},
-    { nombre: 'Puppies Halls',   calificacion: '4.8', ciudad: 'Iquitos, Iquitos', pais: 'Perú', precio: '420.000 COP', imagen: 'Puppies Hall.jpg', categorias: ['Guarderia', 'Con patio', 'Con entrenamiento']},
-    { nombre: 'Pums and Jumps',  calificacion: '4.7', ciudad: 'Milán, Milán',   pais: 'Italia',  precio: '510.000 COP', imagen: 'Pums and Jumps.jpg', categorias: ['Guarderia', 'Con entrenamiento']},
-    { nombre: 'Fuzzy', calificacion: '4.5', ciudad: 'Cecilia, Cecilia',     pais: 'Italia', precio: '360.000 COP', imagen: 'Fuzzy.jpg', categorias: ['Guarderia']},
-  ];
-
-
-get destinosFiltrados(): Destino[] {
-    if (this.categoriaActiva === ' ') {
-      return this.destinos;  // muestra todos
-    }
-    return this.destinos.filter(d =>
-      d.categorias.includes(this.categoriaActiva)
-    );
+  get filtrados(): Alojamiento[] {//devuelve los alojamientos filtrados según la categoría activa
+    return this.categoriaActiva === 'Animales'
+      ? this.alojamientos
+      : this.alojamientos.filter(a => a.categorias.includes(this.categoriaActiva));
   }
 
-  seleccionarCategoria(cat: string) {
-    this.categoriaActiva = this.categoriaActiva === cat ? '': cat;
+  get visibles(): Alojamiento[] {
+    return this.filtrados.slice(0, this.limiteVisibles);//recorta el array desde 0 hasta n
   }
 
-onAnimals(){
-  console.log('animals');
-  this.mostrarOnAnimals = true;
+  seleccionar(categoria: string): void { //se ejecuta al hacer clic en una categoría
+    this.categoriaActiva = categoria; //actualiza la categoría activa
+    this.limiteVisibles = 2; // resetea el límite a 2
+  }
+
+  verMas(): void {
+    this.limiteVisibles += 3;//aumenta el numero visible a 3
+  }
+
+  volver(): void {
+    this.router.navigate(['/home']);//regresa con el url y ek filtreado
   }
 }

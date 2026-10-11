@@ -1,7 +1,7 @@
 <section class="registro">
     <section class="marketplace">
 
-        <!-- Header -->
+        <!-- header -->
         <header class="header">
             <div class="header-text">
                 <h1 class="title">MARKETPLACE</h1>
@@ -13,31 +13,31 @@
             </div>
         </header>
 
-        <!-- Barra de búsqueda -->
+        <!-- barra de búsqueda -->
         <div class="search-bar">
             <input type="text" class="search-input" placeholder="Barra de búsqueda">
             <button class="search-btn" aria-label="Buscar"></button>
         </div>
 
-        <!-- Filtros: ahora navegan con routerLink -->
+        <!-- filtros, ahora navegan con routerLink -->
         <div class="filtros">
             <button class="filtro-btn" (click)="irAFiltro  ('casas')">Casas</button>
             <button class="filtro-btn" (click)="irAFiltro  ('apartamentos')">Apartamentos</button>
-            <button class="filtro-btn" (click)="irAFiltro  ('rentar')">Rentar</button>
             <button class="filtro-btn" (click)="irAFiltro  ('animales')">Animales</button>
+            <button class="filtro-btn" (click)="irAFiltro  ('rentar')">Filtrar</button>
         </div>
 
-        <!-- Hero -->
+        <!-- hero -->
         <div class="hero">
             <img src="Bogota.jpg" alt="Bogotá">
         </div>
 
-        <!-- Fila título -->
+        <!-- fila título -->
         <div class="fila-titulo">
             <h3 class="fila-label">Alojamientos destacados</h3>
         </div>
 
-        <!-- Cards -->
+        <!-- cards -->
         <div class="cards-destinos">
             @for (destino of destinosVisibles; track $index) {
                 <article class="card-destino">
@@ -48,6 +48,7 @@
             }
         </div>
 
+        <!--aumenta el ´límite de destinos visibles-->
         <a href="#" class="ver-mas" (click)="verMas(); $event.preventDefault()">
             Ver más...
         </a>

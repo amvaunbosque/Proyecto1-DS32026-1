@@ -1,4 +1,3 @@
-<!-- houses-accommodations-page.html -->
 <section class="marketplace">
   <button class="volver" (click)="volver()">← Volver</button>
 
@@ -19,7 +18,7 @@
 
   <div class="cards-destinos">
     @for (a of visibles; track a.id) {
-      <!-- ✅ AQUÍ el routerLink que faltaba -->
+      
       <article class="card-destino" [routerLink]="['/detalles', a.id]">
         <span class="card-tag top">{{ a.nombre }}</span>
         <img [src]="a.imagen" [alt]="a.nombre">

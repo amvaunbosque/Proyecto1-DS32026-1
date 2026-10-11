@@ -86,6 +86,7 @@ export class RegistryPage {
     this.metodoPago.forEach((m, i) => m.seleccionado = (i === index));
   }
 
+  //bloque de elememtos del registro
   onRegister() {
     if (!this.entidadBancaria || this.numeroCuenta){
       console.warn('Faltan datos obligatorios');
@@ -104,6 +105,7 @@ export class RegistryPage {
     this.mostrarHome = true;
   }
 
+  //bloque de información bancaria ======
     onTarjeta() {
     if (!this.nombreBanco || this.nombreCliente){
       console.warn('Faltan datos obligatorios');
@@ -162,8 +164,9 @@ export class RegistryPage {
 
     this.mostrarHome = true;
   }
+  //============================================
 
-  onConfirmar() {
+  onConfirmar() {//confirma dependinedo de qué información bancaria se seleccionó
   switch (this.tipoPagoSeleccionado) {
     case 'Tarjeta':
       this.onTarjeta();
