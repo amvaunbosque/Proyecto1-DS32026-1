@@ -4,6 +4,7 @@ import { DecimalPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alojamiento } from '../../core/model/model';
 import { FormsModule } from '@angular/forms';
+import { validarReserva, precioNumerico, esActivo, capacidadDe } from '../../core/utils/reglas-reserva';
 import { ReservaService, Reserva } from '../../core/services/reserva.service';
 
 interface CeldaDia {
@@ -57,8 +58,9 @@ export class ApartmentsAccommodationsDetailsPage implements OnInit {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.alojamiento = APARTAMENTOS.find(c => c.id === id);
-
+    const encontrado = APARTAMENTOS.find(c => c.id === id);
+    this.alojamiento = encontrado && esActivo(encontrado) ? encontrado: undefined;
+    
     this.construirCalendario();
 
     if (this.alojamiento) {
@@ -75,6 +77,7 @@ export class ApartmentsAccommodationsDetailsPage implements OnInit {
   }
 
   reservar(): void {
+    if (!this.cotizacionValida) return;
     this.codigoReserva = 'RES-' + Math.floor(100000 + Math.random() * 900000);
     this.estadoReserva = 'PENDIENTE';
     this.mostrarModal = true;
@@ -85,10 +88,8 @@ export class ApartmentsAccommodationsDetailsPage implements OnInit {
   }
 
   confirmarReserva(): void {
-    if (!this.alojamiento) return;
-
+    if (!this.alojamiento || !this.cotizacionValida) return;
     this.estadoReserva = 'CONFIRMADA';
-
     const nuevaReserva: Reserva = {
       idReserva: this.codigoReserva,
       alojamientoId: this.alojamiento.id,
@@ -107,24 +108,43 @@ export class ApartmentsAccommodationsDetailsPage implements OnInit {
     console.log('Reservas guardadas actualmente:', this.reservaService.obtenerReservas());
   }
 
-  get precioPorNoche(): number {
-    if (!this.alojamiento?.precio) return 0;
-    const precioLimpio = String(this.alojamiento.precio).replace(/[^0-9]/g, '');
-    return Number(precioLimpio);
-  }
+    get subtotal(): number {
+      return this.precioPorNoche * this.noches;
+    }
+  
+    get tarifaLimpieza(): number {
+      if (this.noches === 0) return 0;
+      return (this.alojamiento as any)?.tarifaLimpieza ?? 60000;
+    }
+  
+    get tarifaServicio(): number {
+      return Math.round(this.subtotal * 0.10);
+    }
 
-  get subtotal(): number {
-    return this.precioPorNoche * this.noches;
-  }
+get precioPorNoche(): number {
+  return precioNumerico(this.alojamiento?.precio);
+}
 
-  get tarifaLimpieza(): number {
-    if (this.noches === 0) return 0;
-    return (this.alojamiento as any)?.tarifaLimpieza ?? 60000;
-  }
+get capacidad(): number {
+  return capacidadDe(this.alojamiento);
+}
 
-  get tarifaServicio(): number {
-    return Math.round(this.subtotal * 0.10);
-  }
+get errores(): string[] {
+  return validarReserva({
+    inicio: this.fechaInicio,
+    fin: this.fechaFin,
+    hoy: this.hoy,
+    huespedes: this.huespedes,
+    capacidad: this.capacidad,
+    precioNoche: this.precioPorNoche,
+  });
+}
+
+
+  // reglas 6 y 7: solo hay cotización válida si no hay ningún error
+get cotizacionValida(): boolean {
+  return this.errores.length === 0;
+}
 
   get valorTotal(): number {
     if (this.noches === 0) return 0;

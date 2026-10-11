@@ -4,6 +4,7 @@ import { DecimalPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alojamiento } from '../../core/model/model';
 import { FormsModule } from '@angular/forms';
+import { validarReserva, precioNumerico, esActivo, capacidadDe } from '../../core/utils/reglas-reserva';
 import { ReservaService, Reserva } from '../../core/services/reserva.service'; /*los servicios injectable y las interfaces no van adentro del import */
 interface CeldaDia {
   numero: number;
@@ -66,8 +67,9 @@ export class HousesAccommodationsDetailsPage implements OnInit {
       paramMap.get('id')); //paraMap lee parámetro de ruta id, entonces devuleve string
 
     //buscar alojamiento
-    this.alojamiento = CASAS.find(c => c.id === id); //en el array CASAS recorre y devuelve el primer elemento que coincida con el id en url
-
+    const encontrado = CASAS.find(c => c.id === id);
+    this.alojamiento = encontrado && esActivo(encontrado) ? encontrado: undefined;
+          
       //calendario
       this.construirCalendario();
 
@@ -89,6 +91,7 @@ export class HousesAccommodationsDetailsPage implements OnInit {
   }
 
   reservar(): void {
+    if (!this.cotizacionValida) return;
     this.codigoReserva = 'RES-' + Math.floor(100000 + Math.random() * 900000); //está dando un numero rando al id de reserva, entre los num del math
     this.estadoReserva = 'PENDIENTE'; 
     this.mostrarModal = true; //controla si el modal se ve o no
@@ -100,10 +103,8 @@ export class HousesAccommodationsDetailsPage implements OnInit {
 
   // bloque confirmación de reserva
   confirmarReserva(): void { 
-    if (!this.alojamiento) return; //busca si existe o es undefined
-
+    if (!this.alojamiento || !this.cotizacionValida) return;//busca si existe o es undefined
     this.estadoReserva = 'CONFIRMADA'; //cambia el estado
-
     const nuevaReserva: Reserva = { //bloque con todas las cosas qye tiene la constante de reserva (cotización)
       idReserva: this.codigoReserva,
       alojamientoId: this.alojamiento.id,
@@ -115,7 +116,8 @@ export class HousesAccommodationsDetailsPage implements OnInit {
       fechaEntrada: this.fechaEntrada,
       fechaSalida: this.fechaSalida,
       valorTotal: this.valorTotal,
-      estado: this.estadoReserva
+      estado: this.estadoReserva,
+      ciudad:this.alojamiento.ciudad
     };
 
     // se guarda en el servicio (memoria + localStorage)
@@ -124,37 +126,50 @@ export class HousesAccommodationsDetailsPage implements OnInit {
     console.log('Reservas guardadas actualmente:', this.reservaService.obtenerReservas());
   }
 
-// calculo sw tarifas
-// =====
+    get subtotal(): number {
+      return this.precioPorNoche * this.noches;
+    }
+  
+    get tarifaLimpieza(): number {
+      if (this.noches === 0) return 0;
+      return (this.alojamiento as any)?.tarifaLimpieza ?? 60000;
+    }
+  
+    get tarifaServicio(): number {
+      return Math.round(this.subtotal * 0.10);
+    }
 
-  // 1. Limpia el precio base por noche
-  get precioPorNoche(): number {
-    if (!this.alojamiento?.precio) return 0;
-    const precioLimpio = String(this.alojamiento.precio).replace(/[^0-9]/g, '');
-    return Number(precioLimpio);
-  }
+get precioPorNoche(): number {
+  return precioNumerico(this.alojamiento?.precio);
+}
 
-  // 2. Subtotal (precio por noche * noches seleccionadas)
-  get subtotal(): number {
-    return this.precioPorNoche * this.noches;
-  }
+get capacidad(): number {
+  return capacidadDe(this.alojamiento);
+}
 
-  // 3. Tarifa de limpieza (toma la del alojamiento si existe, o define $60.000 por defecto)
-  get tarifaLimpieza(): number {
-    if (this.noches === 0) return 0;
-    return (this.alojamiento as any)?.tarifaLimpieza ?? 60000; 
-  }
+get errores(): string[] {
+  return validarReserva({
+    inicio: this.fechaInicio,
+    fin: this.fechaFin,
+    hoy: this.hoy,
+    huespedes: this.huespedes,
+    capacidad: this.capacidad,
+    precioNoche: this.precioPorNoche,
+  });
+}
 
-  // 4. Tarifa de servicio (10 % del subtotal)
-  get tarifaServicio(): number {
-    return Math.round(this.subtotal * 0.10);
-  }
 
-  // 5. Total (subtotal + tarifa de limpieza + tarifa de servicio)
-  get valorTotal(): number {
-    if (this.noches === 0) return 0;
-    return this.subtotal + this.tarifaLimpieza + this.tarifaServicio;
-  }
+  // reglas 6 y 7: solo hay cotización válida si no hay ningún error
+get cotizacionValida(): boolean {
+  return this.errores.length === 0;
+}
+
+  
+    get valorTotal(): number {
+      if (this.noches === 0) return 0;
+      return this.subtotal + this.tarifaLimpieza + this.tarifaServicio;
+    }
+  
 
     private soloFecha(f: Date): Date {
     return new Date(f.getFullYear(), f.getMonth(), f.getDate());

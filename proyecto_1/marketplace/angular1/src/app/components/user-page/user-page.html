@@ -1,57 +1,139 @@
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
 
 @if (!mostrarConfiguration) {
-    <div class="top-bar">
-        <div class="icon-circle"></div>
-    <h3 class="text-complement">Información de contacto</h3>
-        <div class="top-bar-actions">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <span class="menu-icon">⋯</span>
-        </div>
+  <!-- Información general del usuario -->
+  <div class="top-bar">
+    <div class="icon-circle"></div>
+    <div class="user-info-header">
+      <h3 class="text-complement">{{ nombreUsuario }}</h3>
+      <p class="user-subtext">{{ correoUsuario }} · {{ misReservas.length }} reserva(s) activa(s)</p>
     </div>
+    <div class="top-bar-actions">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <span class="menu-icon">⋯</span>
+    </div>
+  </div>
 
-    <section class="registro">
-    <h4 class="section-label">Reservas</h4>
+  <section class="registro">
+    <h4 class="section-label">Resumen de actividad</h4>
     <div class="opciones-fila">
-        @for (opcion of reservaOpciones; track $index) {
-    <div
-            class="opcion-box"
-            [class.selected]="reservaSeleccionada === $index"
-            (click)="seleccionarReserva($index)">
-            </div>
-        }
+      @for (opcion of reservaOpciones; track $index) {
+        <div
+          class="opcion-box"
+          [class.selected]="reservaSeleccionada === $index"
+          (click)="seleccionarReserva($index)">
+          <span class="opcion-titulo">{{ $index === 0 ? 'Última Reserva' : 'Estado de Cuenta' }}</span>
+          @if ($index === 0) {
+            <p class="opcion-detalle">
+              {{ misReservas.length > 0 ? misReservas[misReservas.length - 1].nombreAlojamiento : 'Sin reservas activas' }}
+            </p>
+          } @else {
+            <p class="opcion-detalle">Total reservas: {{ misReservas.length }}</p>
+          }
+        </div>
+      }
     </div>
 
     <h4 class="section-label">Preferencias</h4>
     <div class="circulos-fila">
-        @for (color of preferenciasColores; track $index) {
-            <div
-            class="circulo"
-            [class.selected]="preferenciaSeleccionada === $index"
-            [style.background]="color"
-            (click)="seleccionarPreferencia($index)">
-            </div>
-        }
-    </div>
-
-    <div class="cards-fila">
-    @for (card of metodoPago; track $index) {
+      @for (color of preferenciasColores; track $index) {
         <div
-            class="metodo-card"
-            [class.selected]="card.seleccionado"
-            (click)="seleccionarMetodo($index)">
-            <span class="indicador"></span>
-            <div class="linea linea-larga"></div>
-            <div class="linea linea-corta"></div>
+          class="circulo"
+          [class.selected]="preferenciaSeleccionada === $index"
+          [style.background]="color"
+          (click)="seleccionarPreferencia($index)">
         </div>
-    }
+      }
     </div>
 
-    <app-button [textButton]="'confirmar '" [variant]="'base-button'" (buttonClick)="onPagar()"></app-button>
-</section>
-}@else {
-    <app-home-page></app-home-page>
+    <!-- CAJAS CON LÍNEAS NARANJAS: Información esencial de la reserva confirmada -->
+    <h4 class="section-label">Reservas Confirmadas (Esencial)</h4>
+    
+    @if (misReservas.length > 0) {
+      <div class="cards-fila">
+        @for (reserva of misReservas.slice(0, 2); track reserva.idReserva; let i = $index) {
+          <div
+            class="metodo-card"
+            [class.selected]="tarjetaActiva === i"
+            (click)="seleccionarMetodo(i)">
+            
+            <span class="indicador"></span>
+            
+            <!-- Información esencial dentro de la caja -->
+            <div class="info-esencial-reserva">
+              <span class="badge-estado">{{ reserva.estado }}</span>
+              <h5 class="esencial-titulo">{{ reserva.nombreAlojamiento }}</h5>
+              <p class="esencial-ciudad">📍 {{ obtenerCiudad(reserva) }}</p>
+              <p class="esencial-fechas">📅 {{ reserva.fechaEntrada }} → {{ reserva.fechaSalida }}</p>
+              <p class="esencial-total">💰 <strong>${{ reserva.valorTotal | number }}</strong></p>
+            </div>
+
+            <!-- Tus líneas naranjas/verdes originales -->
+            <div class="lineas-decorativas">
+              <div class="linea linea-larga"></div>
+              <div class="linea linea-corta"></div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <!-- Mensaje apropiado si no existen reservas -->
+      <div class="sin-reservas-box">
+        <p>Aún no tienes reservas confirmadas. ¡Explora los alojamientos y agenda tu próxima estadía!</p>
+      </div>
+    }
+
+    <!-- BOTÓN DE BOOKINGS (Mis Reservas) -->
+    <button class="btn-bookings" (click)="toggleBookings()">
+      {{ mostrarBookings ? '▲ Ocultar Bookings (Mis reservas)' : '▼ Ver Bookings (Información completa de reservas)' }}
+    </button>
+
+    <!-- 3.6 CONSULTA DE RESERVAS: Información completa -->
+    @if (mostrarBookings) {
+      <div class="bookings-panel">
+        <h3 class="bookings-titulo">Mis reservas ({{ misReservas.length }})</h3>
+
+        @if (misReservas.length > 0) {
+          <div class="bookings-lista">
+            @for (r of misReservas; track r.idReserva) {
+              <div class="booking-detalle-card">
+                <div class="booking-header">
+                  <div>
+                    <h4>{{ r.nombreAlojamiento }}</h4>
+                    <span class="booking-id">Código: {{ r.idReserva }}</span>
+                  </div>
+                  <span class="booking-estado">{{ r.estado }}</span>
+                </div>
+
+                <div class="booking-grid">
+                  <div><strong>Alojamiento:</strong> {{ r.nombreAlojamiento }}</div>
+                  <div><strong>Ciudad:</strong> {{ obtenerCiudad(r) }}</div>
+                  <div><strong>Fecha de llegada:</strong> {{ r.fechaEntrada }}</div>
+                  <div><strong>Fecha de salida:</strong> {{ r.fechaSalida }}</div>
+                  <div><strong>Número de huéspedes:</strong> {{ r.huespedes }} adultos ({{ r.noches }} noches)</div>
+                  <div><strong>Huésped titular:</strong> {{ r.nombreHuesped }} ({{ r.correoHuesped }})</div>
+                </div>
+
+                <div class="booking-footer">
+                  <span>Valor total:</span>
+                  <strong class="booking-precio">${{ r.valorTotal | number }}</strong>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="sin-reservas-box">
+            <p>No existen reservas registradas en este momento.</p>
+          </div>
+        }
+      </div>
+    }
+
+    <app-button [textButton]="'Volver al Inicio'" [variant]="'base-button'" (buttonClick)="onPagar()"></app-button>
+  </section>
+} @else {
+  <app-home-page></app-home-page>
 }

@@ -263,35 +263,45 @@
         </div>
       </div>
 
-      @if (noches > 0) {
-        <div class="cotizacion-previa">
-          <h3 class="seccion">Detalle del precio</h3>
-          <div class="fila-tarifa">
-            <span>${{ precioPorNoche | number }} x {{ noches }} {{ noches === 1 ? 'noche' : 'noches' }} (Subtotal)</span>
-            <span>${{ subtotal | number }}</span>
-          </div>
-          <div class="fila-tarifa">
-            <span>Tarifa de limpieza</span>
-            <span>${{ tarifaLimpieza | number }}</span>
-          </div>
-          <div class="fila-tarifa">
-            <span>Tarifa de servicio (10%)</span>
-            <span>${{ tarifaServicio | number }}</span>
-          </div>
-          <hr class="linea-total">
-          <div class="fila-tarifa total-final">
-            <span>Total</span>
-            <strong>${{ valorTotal | number }}</strong>
-          </div>
-        </div>
-      }
+      <div class="huespedes-campo">
+  <label for="huespedes">Huéspedes (máx. {{ capacidad }})</label>
+  <input id="huespedes" type="number" min="1" [max]="capacidad" [(ngModel)]="huespedes">
+</div>
 
-      <div class="reserva">
-        <button class="reservar" (click)="reservar()" [disabled]="noches === 0">
-          {{ noches === 0 ? 'Selecciona fechas en el calendario para reservar' : 'Reservar' }}
-        </button>
-      </div>
+@if (fechaInicio && errores.length > 0) {
+  <ul class="errores-reserva">
+    @for (e of errores; track e) { <li>{{ e }}</li> }
+  </ul>
+}
 
+@if (cotizacionValida) {
+  <div class="cotizacion-previa">
+    <h3 class="seccion">Detalle del precio</h3>
+    <div class="fila-tarifa">
+      <span>${{ precioPorNoche | number }} x {{ noches }} {{ noches === 1 ? 'noche' : 'noches' }} (Subtotal)</span>
+      <span>${{ subtotal | number }}</span>
+    </div>
+    <div class="fila-tarifa">
+      <span>Tarifa de limpieza</span>
+      <span>${{ tarifaLimpieza | number }}</span>
+    </div>
+    <div class="fila-tarifa">
+      <span>Tarifa de servicio (10%)</span>
+      <span>${{ tarifaServicio | number }}</span>
+    </div>
+    <hr class="linea-total">
+    <div class="fila-tarifa total-final">
+      <span>Total</span>
+      <strong>${{ valorTotal | number }}</strong>
+    </div>
+  </div>
+}
+
+<div class="reserva">
+  <button class="reservar" (click)="reservar()" [disabled]="!cotizacionValida">
+    {{ noches === 0 ? 'Selecciona fechas en el calendario para reservar' : 'Reservar' }}
+  </button>
+</div>
     </div>
     <!--===============================-->
 
@@ -340,8 +350,7 @@
               <!-- 3.4 cotización -->
               <div class="datos-grid">
                 <div class="dato-chip">
-                  <!-- ← CAMBIO: "Casa / Villa" por "Apartamento / Suite" -->
-                  <span class="chip-label">Alojamiento:</span> Apartamento / Suite
+                  <span class="chip-label">Alojamiento:</span> Guardería / MAscotas
                 </div>
                 <div class="dato-chip">
                   <span class="chip-label">Nombre:</span> {{ alojamiento.nombre }}
@@ -369,7 +378,7 @@
                 </div>
               </div>
 
-              <!-- Desglose de tarifas dentro del modal -->
+              <!-- desglose de tarifas dentro del modal -->
               <div class="desglose-modal">
                 <div class="dato-chip full-width">
                   <span class="chip-label">Subtotal ({{ noches }} noches):</span> ${{ subtotal | number }}

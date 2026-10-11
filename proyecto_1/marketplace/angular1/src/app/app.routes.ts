@@ -7,6 +7,7 @@ import { FilterPage } from './components/filter-page/filter-page';
 import { HousesAccommodationsDetailsPage } from './components/houses-accommodations-details-page/houses-accommodations-details-page';
 import { ApartmentsAccommodationsDetailsPage } from './components/apartments-accommodations-details-page/apartments-accommodations-details-page';
 import { AnimalsAccommodationsDetailsPage } from './components/animals-accommodations-details-page/animals-accommodations-details-page';
+import { BookingsPage } from './components/bookings-page/bookings-page';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -14,9 +15,9 @@ export const routes: Routes = [
   { path: 'home', component: HomePage },
   { path: 'registry', component: RegistryPage },
   { path: 'user', component: UserPage },
+  { path: 'bookings', component: BookingsPage },
   { path: 'filter', component: FilterPage },
   { path: 'detalle/casas/:id', component: HousesAccommodationsDetailsPage },
   { path: 'detalle/apartamentos/:id', component: ApartmentsAccommodationsDetailsPage},
   { path: 'detalle/animales/:id', component: AnimalsAccommodationsDetailsPage},
-  { path: '**', redirectTo: 'home' }
 ];

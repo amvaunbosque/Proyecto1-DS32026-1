@@ -2,6 +2,7 @@ import { ANIMALES } from './../../core/data/data/animales';
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Alojamiento } from '../../core/model/model';
+import { validarReserva, precioNumerico, esActivo, capacidadDe } from '../../core/utils/reglas-reserva';
 
 @Component({
   standalone: true,
@@ -25,16 +26,6 @@ export class AnimalsAccommodationsPage {
   limiteVisibles = 2;
 
   alojamientos: Alojamiento[] = ANIMALES;//lista completa de alojamientos de tipo casas
-
-  get filtrados(): Alojamiento[] {//devuelve los alojamientos filtrados según la categoría activa
-    return this.categoriaActiva === 'Animales'
-      ? this.alojamientos
-      : this.alojamientos.filter(a => a.categorias.includes(this.categoriaActiva));
-  }
-
-  get visibles(): Alojamiento[] {
-    return this.filtrados.slice(0, this.limiteVisibles);//recorta el array desde 0 hasta n
-  }
 
   seleccionar(categoria: string): void { //se ejecuta al hacer clic en una categoría
     this.categoriaActiva = categoria; //actualiza la categoría activa

@@ -860,3 +860,7 @@
     background: #9CA89E;
     cursor: not-allowed;
 }
+
+.errores-reserva { margin: 0; padding-left: 1.2rem; color: #92400E; font-size: 0.85rem; }
+.huespedes-campo { display: flex; align-items: center; gap: 0.75rem; font-size: 0.9rem; }
+.huespedes-campo input { width: 4rem; padding: 0.3rem; }

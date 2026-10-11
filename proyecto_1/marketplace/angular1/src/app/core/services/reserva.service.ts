@@ -12,6 +12,7 @@ export interface Reserva { //información de la reserva
   fechaSalida: string;
   valorTotal: number;
   estado: 'PENDIENTE' | 'CONFIRMADA';
+  ciudad?: string;
 }
 
 @Injectable({

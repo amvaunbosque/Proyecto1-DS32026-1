@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Alojamiento } from '../../core/model/model';
 import { CASAS } from '../../core/data/data/casas';
+import { validarReserva, precioNumerico, esActivo, capacidadDe } from '../../core/utils/reglas-reserva';
 
 @Component({
   selector: 'app-houses-accommodations-page',
@@ -24,6 +25,7 @@ export class HousesAccommodationsPage {
   alojamientos: Alojamiento[] = CASAS; //lista completa de alojamientos de tipo casas
 
   get filtrados(): Alojamiento[] { //devuelve los alojamientos filtrados según la categoría activa
+    const activos = this.alojamientos.filter(esActivo);
     return this.categoriaActiva === 'Casas'
       ? this.alojamientos
       : this.alojamientos.filter(a => a.categorias.includes(this.categoriaActiva));

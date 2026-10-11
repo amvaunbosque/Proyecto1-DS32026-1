@@ -20,4 +20,6 @@ export interface Alojamiento { //información complementaria
     banos?: number;
     area?: number;
     imagenes?: string[];
+    capacidad?: number;
+    activo?: boolean;
 }
