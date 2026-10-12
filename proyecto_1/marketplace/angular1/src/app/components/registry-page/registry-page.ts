@@ -2,8 +2,10 @@ import { Component, Input, Output, EventEmitter} from '@angular/core';
 import { CustomInput } from '../custom-input/custom-input';
 import { Button } from '../button/button';
 import { HomePage } from '../home-page/home-page';
+import { Router } from '@angular/router'; //importar router para la navegación
+
 @Component({
-  imports: [CustomInput, Button, HomePage],
+  imports: [CustomInput, Button],
   selector: 'app-registry-page',
   styleUrl: './registry-page.css',
   templateUrl: './registry-page.html',
@@ -11,16 +13,18 @@ import { HomePage } from '../home-page/home-page';
 export class RegistryPage {
   title: String = "REGISTRO";
   subtitle: String = "Completa tus datos";
-  mostrarHome: boolean = false;
+
+  constructor(private router: Router) {}
 
   
   // bloque "reservas" (los 2 recuadros)
-  reservaOpciones: string[] = ['Tarjeta', 'Pse', 'Bancario', 'Efectivo'];
+  reservaOpciones: string[] = ['TARJETA', 'PSE', 'BANCARIO', 'EFECTIVO'];
   tipoPagoSeleccionado: string | null = null;
 
   
   seleccionarReserva(opcion: string) {
     this.tipoPagoSeleccionado = opcion;
+    this.mensajeError='';
   }
 
   //======bloque de registro======
@@ -56,134 +60,28 @@ export class RegistryPage {
   claveTemporal: String = "";
   //=========================
 
-
-  //======bloque de banco======
-  // información de banco
-  entidadBancaria: string = "";
-
   // datos de cuenta
   numeroCuenta: String = "";
-  nombreCuenta: String="";
-
-  // clave
-  claveCajero: String = "";
-  //======================
-
-  
-  //======bloque de efectivo======
-  // información de banco
-  cantidadEfectivo: string = "";
-  //======================
-
-
-  // laas 2 tarjetas (método de pago u otra selección)
-  metodoPago: { seleccionado: boolean }[] = [
-    { seleccionado: true },
-    { seleccionado: false },
-  ];
-
-  seleccionarMetodo(index: number) {
-    this.metodoPago.forEach((m, i) => m.seleccionado = (i === index));
-  }
-
-  //bloque de elememtos del registro
-  onRegister() {
-    if (!this.entidadBancaria || this.numeroCuenta){
-      console.warn('Faltan datos obligatorios');
-      return;
-    }
-    console.log('Datos enviados:', {
-      nombreCompleto: this.nombreCompleto,
-      correo: this.correo,
-      ciudad: this.ciudad,
-      zipCode: this.zipCode,
-      departamento: this.departamento,
-      telefono: this.telefono,
-      reservaSeleccionada: this.tipoPagoSeleccionado,
-      });
-
-    this.mostrarHome = true;
-  }
 
   //bloque de información bancaria ======
-    onTarjeta() {
-    if (!this.nombreBanco || this.nombreCliente){
-      console.warn('Faltan datos obligatorios');
-      return;
-    }
-    console.log('Tarjeta', {
-      numeroTarjeta: this.numeroTarjeta,
-      fechaExp: this.fechaExp,
-      cvv: this.cvv,
-      nombreTarjeta: this.nombreTarjeta,
-    });
+  mensajeError = '';
 
-    this.mostrarHome = true;
+  private pagoValido(): boolean {
+    switch (this.tipoPagoSeleccionado) {
+      case 'TARJETA':  return !!(this.numeroTarjeta && this.fechaExp && this.cvv && this.nombreTarjeta);
+      case 'PSE':      return !!(this.nombreBanco && this.nombreCliente && this.id && this.claveTemporal);
+      case 'BANCARIO': return !!(this.nombreBanco && this.numeroCuenta);
+      case 'EFECTIVO': return true;
+      default:         return false;
+    }
   }
 
-  
-    onPse() {
-    if (!this.nombreBanco || this.nombreCliente){
-      console.warn('Faltan datos obligatorios');
+  onConfirmar(): void {
+    if (!this.nombreCompleto || !this.correo || !this.pagoValido()) {
+      this.mensajeError = 'Completa tus datos y el método de pago.';
       return;
     }
-    console.log('Datos enviados:', {
-      nombreBanco: this.nombreBanco,
-      nombreCliente: this.nombreCliente,
-      id: this.id,
-      claveTemporal: this.claveTemporal,
-    });
-
-    this.mostrarHome = true;
-  }
-
-    onBancario() {
-    if (!this.entidadBancaria){
-      console.warn('Faltan datos obligatorios');
-      return;
-    }
-    console.log('Datos enviados:', {
-      numeroCuenta: this.numeroCuenta,
-      nombreCuenta: this.nombreCuenta,
-      claveCajero: this.claveCajero,
-    });
-
-    this.mostrarHome = true;
-  }
-
-  
-    onEfectivo() {
-    if (!this.cantidadEfectivo){
-      console.warn('Faltan datos obligatorios');
-      return;
-    }
-    console.log('Datos enviados:', {
-      nombreCliente: this.nombreCliente,
-      cantidadEfectivo: this.cantidadEfectivo,
-    });
-
-    this.mostrarHome = true;
-  }
-  //============================================
-
-  onConfirmar() {//confirma dependinedo de qué información bancaria se seleccionó
-  switch (this.tipoPagoSeleccionado) {
-    case 'Tarjeta':
-      this.onTarjeta();
-      break;
-    case 'Pse':
-      this.onPse();
-      break;
-    case 'Bancario':
-      this.onBancario();
-      break;
-    case 'Efectivo':
-      this.onEfectivo();
-      break;
-    default:
-      console.warn('Selecciona un método de pago');
-    return;
-    }
-    this.mostrarHome = true;
+    this.mensajeError='';
+    this.router.navigate(['/home']);
   }
 }

@@ -71,7 +71,7 @@ export class AnimalsAccommodationsDetailsPage {
     }
   
     volver(): void {
-      this.router.navigate(['/filter'], { queryParams: { tipo: 'animales' } });
+      this.router.navigate(['/home']);
     }
   
     reservar(): void {
@@ -99,7 +99,8 @@ export class AnimalsAccommodationsDetailsPage {
         fechaEntrada: this.fechaEntrada,
         fechaSalida: this.fechaSalida,
         valorTotal: this.valorTotal,
-        estado: this.estadoReserva
+        estado: this.estadoReserva,
+        ciudad: this.alojamiento.ciudad,
       };
   
       this.reservaService.guardarReserva(nuevaReserva);

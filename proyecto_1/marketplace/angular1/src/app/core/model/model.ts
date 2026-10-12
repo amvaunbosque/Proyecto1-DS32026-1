@@ -11,6 +11,7 @@ export interface Alojamiento { //información complementaria
     nombre: string;
     calificacion: string;
     ciudad: string;
+    tipo?: 'casa'|'apartamento'|'animal';
     pais: string;
     precio: string;
     imagen: string;

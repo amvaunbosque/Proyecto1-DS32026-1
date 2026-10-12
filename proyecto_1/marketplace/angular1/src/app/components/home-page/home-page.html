@@ -40,12 +40,14 @@
         <!-- cards -->
         <div class="cards-destinos">
             @for (destino of destinosVisibles; track $index) {
-                <article class="card-destino">
-                    <span class="card-tag top">{{ destino.ciudad }}</span>
-                    <img [src]="destino.imagen" [alt]="destino.ciudad">
-                    <span class="card-tag bottom">{{ destino.pais }}</span>
-                </article>
-            }
+                <article
+                class="card-destino"
+                [routerLink]="['/filter']"
+                [queryParams]="{ ciudad: destino.clave }">
+                <span class="card-tag top">{{ destino.ciudad }}</span>
+                <img [src]="destino.imagen" [alt]="destino.ciudad">
+                <span class="card-tag bottom">{{ destino.pais }}</span>
+        </article>}
         </div>
 
         <!--aumenta el ´límite de destinos visibles-->

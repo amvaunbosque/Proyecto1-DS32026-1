@@ -1,8 +1,3 @@
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
-
-@if (!mostrarHome) {
 <section class= "registro">
     <h1 class="header"> {{title}}</h1> <!--se utiliza para declarar y conectar el bloque del css para el titulo -->
     <h3 class = "subtitle-description"> {{ subtitle }}</h3>
@@ -14,30 +9,35 @@
     <div class="residencias">
     <div>
         <h4 class = "section-title">Residencia</h4>
-        <app-custom-input [inputLabel]="'Dirección'" [inputType]="'text'" [(value)]="ciudad"></app-custom-input>
-        <app-custom-input [inputLabel]="'Teléfono'" [inputType]="'tel'" [(value)]="zipCode"></app-custom-input>
+        <app-custom-input [inputLabel]="'Ciudad'" [inputType]="'text'" [(value)]="ciudad"></app-custom-input>
+        <app-custom-input [inputLabel]="'Zip Code'" [inputType]="'tel'" [(value)]="zipCode"></app-custom-input>
     </div>
     <div>
         <h4 class="section-title">Residencia</h4>
-        <app-custom-input [inputLabel]="'Dirección'" [inputType]="'text'" [(value)]="departamento"></app-custom-input>
+        <app-custom-input [inputLabel]="'Departamento'" [inputType]="'text'" [(value)]="departamento"></app-custom-input>
         <app-custom-input [inputLabel]="'Teléfono'" [inputType]="'tel'" [(value)]="telefono"></app-custom-input>
     </div>
 </div>
 
     <h3 class="section-title">Método de pago</h3>
+    
+    @if (!tipoPagoSeleccionado) {
+    <p class="mensaje-default">Selecciona un método de pago (una cajita).</p>
+}
+
     <div class="opciones-fila">
         @for (opcion of reservaOpciones; track opcion) {
     <div
             class="opcion-box"
             [class.selected]="tipoPagoSeleccionado === opcion"
             (click)="seleccionarReserva(opcion)">
-            {{opcion}} <!--comentario!-->
+            <strong>{{opcion}}</strong> <!--así pongo los nombres de las opciones en nregilla-->
             </div>
         }
     </div>
 
         @switch (tipoPagoSeleccionado) 
-            {@case ('Tarjeta') {
+            {@case ('TARJETA') {
     <div class="form-tarjeta">
     <app-custom-input [inputLabel]="'Número de tarjeta'" [inputType]="'text'" [(value)]="numeroTarjeta"></app-custom-input>
     <div class="pago-fila">
@@ -48,34 +48,32 @@
     </div>
     }
 
-        @case ('Pse') {
+        @case ('PSE') {
     <div class="form-pse">
     <app-custom-input [inputLabel]="'Nombre del banco'" [inputType]="'text'" [(value)]="nombreBanco"></app-custom-input>
     <app-custom-input [inputLabel]="'Nombre del cliente'" [inputType]="'text'" [(value)]="nombreCliente"></app-custom-input>
     <app-custom-input [inputLabel]="'ID'" [inputType]="'text'" [(value)]="id"></app-custom-input>
-    <app-custom-input [inputLabel]="'Clave temporal'" [inputType]="'text'" [(value)]="claveTemporal"></app-custom-input>
+    <!-- CAMBIO: inputType cambiado a 'password' -->
+    <app-custom-input [inputLabel]="'Clave temporal'" [inputType]="'password'" [(value)]="claveTemporal"></app-custom-input>
     </div>
     }
 
-    @case ('Bancario') {
+        @case ('BANCARIO') {
     <div class="form-bancario">
     <app-custom-input [inputLabel]="'Nombre del banco'" [inputType]="'text'" [(value)]="nombreBanco"></app-custom-input>
-    <app-custom-input [inputLabel]="'Número de cuenta'" [inputType]="'text'" [(value)]="numeroTarjeta"></app-custom-input>
+    <!-- CAMBIO: Enlazado a numeroCuenta en lugar de numeroTarjeta -->
+    <app-custom-input [inputLabel]="'Número de cuenta'" [inputType]="'text'" [(value)]="numeroCuenta"></app-custom-input>
     </div>
     }
 
-    @case ('Efectivo') {
+        @case ('EFECTIVO') {
     <p class="mensaje-efectivo">Pagarás en efectivo al recibir. No se requieren datos adicionales.</p>
     }
 
-    @default {
-    <p class="mensaje-default">Selecciona un método de pago (una cajita).</p>
-    <p> Se puede cambiar el método de pago más adelante en el User</p>
+        @default {
     }
 }
+    +@if (mensajeError) { <p class="error">{{ mensajeError }}</p> }
+    
     <app-button [textButton]="'Confirmar datos'" [variant]="'base-button'" (buttonClick)="onConfirmar()"></app-button>
     </section>
-
-}@else {
-    <app-home-page></app-home-page>
-}

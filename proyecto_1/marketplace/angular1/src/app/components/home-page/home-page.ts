@@ -1,56 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
-//declaracio de objretos
 interface Destino {
-    ciudad: string;
-    pais: string;
-    imagen: string;
+  ciudad: string;
+  pais: string;
+  imagen: string;
+  clave: string;
 }
 
 @Component({
-    selector: 'app-home-page',
-    standalone: true,
-    imports: [CommonModule],
-    templateUrl: './home-page.html',
-    styleUrl: './home-page.css',
+  selector: 'app-home-page',
+  standalone: true,
+  imports: [CommonModule, RouterLink],
+  templateUrl: './home-page.html',
+  styleUrl: './home-page.css',
 })
-
 export class HomePage {
+  private router = inject(Router);
 
-//inyecta el servivio router para poder navegar
-    constructor(private router: Router){}
+  destinos: Destino[] = [
+    { ciudad: 'New York, NY', clave: 'New York', pais: 'United States of America', imagen: 'NY City.jpg' },
+    { ciudad: 'Miami, USA', clave: 'Miami', pais: 'United States of America', imagen: 'Miami.jpg' },
+    { ciudad: 'República de Dubai, Dubai', clave: 'Dubai', pais: 'República de Emiratos Árabes', imagen: 'Dubai.jpg' },
+    { ciudad: 'Krung Thep, Bangkok', clave: 'Bangkok', pais: 'Tailandia', imagen: 'Bangkok.jpg' },
+    { ciudad: 'Distrito Capital, Caracas', clave: 'Caracas', pais: 'Venezuela', imagen: 'Caracas.jpg' },
+    { ciudad: 'Lacio, Roma', clave: 'Roma', pais: 'Italia', imagen: 'Roma.jpg' },
+    { ciudad: 'Rio de Janeiro, Rio de Janeiro', clave: 'Rio de Janeiro', pais: 'Brasil', imagen: 'Rio de Janeiro.jpg' },
+    { ciudad: 'Singapur, Singapur', clave: 'Singapur', pais: 'Singapur', imagen: 'Singapur.jpg' },
+    { ciudad: 'Estambul, Estrecho del Bósforo', clave: 'Estambul', pais: 'Turquía', imagen: 'Istambul.jpg' },
+  ];
 
-    irAFiltro(tipo: string): void { //navega a la ruta /filter pasando el parámetro
-        this.router.navigate(['/filter'], { queryParams: { tipo } });
-}
+  limiteVisibles = 3;
 
-//bloque de los airbnb disponibles
-    destinos: Destino[] = [
-        { ciudad: 'New York, NY',                   pais: 'United States of America',    imagen: 'NY City.jpg' },
-        { ciudad: 'Miami, USA',                     pais: 'United States of America',    imagen: 'Miami.jpg' },
-        { ciudad: 'República de Dubai, Dubai',      pais: 'República de Emiratos Árabes', imagen: 'Dubai.jpg' },
-        { ciudad: 'Krung Thep, Bangkok',            pais: 'Tailandia',                    imagen: 'Bangkok.jpg' },
-        { ciudad: 'Distrito Capital, Caracas',      pais: 'Venezuela',                    imagen: 'Caracas.jpg' },
-        { ciudad: 'Lacio, Roma',                    pais: 'Italia',                       imagen: 'Roma.jpg' },
-        { ciudad: 'Rio de Janeiro, Rio de Janeiro', pais: 'Brasil',                       imagen: 'Rio de Janeiro.jpg' },
-        { ciudad: 'Singapur, Singapur',             pais: 'Singapur',                     imagen: 'Singapur.jpg' },
-        { ciudad: 'Estambul, Estrecho del Bósforo', pais: 'Turquía',                      imagen: 'Istambul.jpg' },
-    ];
+  get destinosVisibles(): Destino[] {
+    return this.destinos.slice(0, this.limiteVisibles);
+  }
 
-    limiteVisibles = 3; //cantidad de destinos que se ven en el grid
+  irAFiltro(tipo: string): void {
+    this.router.navigate(tipo === 'rentar' ? ['/filter'] : [`/${tipo}`]);
+  }
 
-    get destinosVisibles(): Destino[] {
-        return this.destinos.slice(0, this.limiteVisibles);
+  verMas(): void {
+    this.limiteVisibles += 3;
+    if (this.limiteVisibles > this.destinos.length) {
+      this.limiteVisibles = this.destinos.length;
     }
-
-    verMas(): void { //devuleve solo los primeros "limitesVisibles" destnos
-        this.limiteVisibles += 3;
-        if (this.limiteVisibles > this.destinos.length) {
-            this.limiteVisibles = this.destinos.length;
-        }
-    }
-    
+  }
 }
-

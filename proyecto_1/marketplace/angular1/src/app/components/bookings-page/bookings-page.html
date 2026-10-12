@@ -23,7 +23,7 @@
 
             <div class="booking-grid">
                 <div><strong>Alojamiento:</strong> {{ r.nombreAlojamiento }}</div>
-                <div><strong>Ciudad:</strong> {{ obtenerCiudad(r) }}</div>
+                <div><strong>Ciudad:</strong> {{ r.ciudad ?? 'Ciudad no especificada' }}</div>
                 <div><strong>Fecha de llegada:</strong> {{ r.fechaEntrada }}</div>
                 <div><strong>Fecha de salida:</strong> {{ r.fechaSalida }}</div>
                 <div><strong>Número de huéspedes:</strong> {{ r.huespedes }} adultos ({{ r.noches }} noches)</div>

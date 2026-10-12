@@ -2,7 +2,7 @@ import { APARTAMENTOS } from './../../core/data/data/apartamentos';
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Alojamiento } from '../../core/model/model';
-import { validarReserva, precioNumerico, esActivo, capacidadDe } from '../../core/utils/reglas-reserva';
+import { esActivo } from '../../core/utils/reglas-reserva';
 @Component({
   selector: 'app-apartments-accommodations-page',
   standalone: true,
@@ -28,7 +28,7 @@ export class ApartmentsAccommodationsPage {
 
   get filtrados(): Alojamiento[] { //devuelve los alojamientos filtrados según la categoría activa
   const activos = this.alojamientos.filter(esActivo);
-  return this.categoriaActiva === 'Apartametos'
+  return this.categoriaActiva === 'Apartamentos'
     ? activos
     : activos.filter(a => a.categorias.includes(this.categoriaActiva));
   }

@@ -65,7 +65,7 @@
     align-items: center;
     justify-content: center;
     display: flex;
-
+    color: #3E563E;
     min-width: 6rem;
     height: 10rem;
     border-radius: 0.625rem;
@@ -76,6 +76,7 @@
 
 .opcion-box:hover {
     color: #fbf9f9;
+    background-color: #3E563E;
 }
 
 .opcion-box.selected {

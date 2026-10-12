@@ -9,14 +9,14 @@ import { FormsModule } from '@angular/forms';
 })
 
 export class CustomInput {
-  @Input() inputLabel: String = ""; //etiqueta label encima que se muestra encima del input
-  @Input() inputType: String = "text"; //tipo de input htlml ya sea text, emial o wtv
-  @Input() inputClass: String=""; 
+  @Input() inputLabel: string = ""; //etiqueta label encima que se muestra encima del input
+  @Input() inputType: string = "text"; //tipo de input htlml ya sea text, emial o wtv
+  @Input() inputClass: string=""; 
 
-  @Input() value: String | number = "";//valor actual del pinut
+  @Input() value: any  = "";//valor actual del pinut
   @Output() valueChange = new EventEmitter<String | number>();//evento que se emite cada que el valor cambia
 
-  onHandleChange(nuevoValor: String | number) {//actualiza la propiedad inerna de value, emite el evento valueChange con el nuevo valor para que el padre reciba y actialice su avrubale
+  onHandleChange(nuevoValor: string | number) {//actualiza la propiedad inerna de value, emite el evento valueChange con el nuevo valor para que el padre reciba y actialice su avrubale
     this.value = nuevoValor;
     this.valueChange.emit(nuevoValor);   
   }

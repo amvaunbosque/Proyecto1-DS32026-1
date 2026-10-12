@@ -66,7 +66,7 @@
             <div class="info-esencial-reserva">
               <span class="badge-estado">{{ reserva.estado }}</span>
               <h5 class="esencial-titulo">{{ reserva.nombreAlojamiento }}</h5>
-              <p class="esencial-ciudad">📍 {{ obtenerCiudad(reserva) }}</p>
+              <p class="esencial-ciudad">📍 {{ reserva.ciudad ?? 'Ciudad no especificada' }}</p> <!-- CAMBIO: Acceso directo y fallback -->
               <p class="esencial-fechas">📅 {{ reserva.fechaEntrada }} → {{ reserva.fechaSalida }}</p>
               <p class="esencial-total">💰 <strong>${{ reserva.valorTotal | number }}</strong></p>
             </div>
@@ -87,50 +87,11 @@
     }
 
     <!-- BOTÓN DE BOOKINGS (Mis Reservas) -->
-    <button class="btn-bookings" (click)="toggleBookings()">
-      {{ mostrarBookings ? '▲ Ocultar Bookings (Mis reservas)' : '▼ Ver Bookings (Información completa de reservas)' }}
-    </button>
+    <!-- CAMBIO: Se reemplazó button por <a routerLink="/bookings"> -->
+    <a routerLink="/bookings" class="btn-bookings">Ver mis reservas</a>
 
-    <!-- 3.6 CONSULTA DE RESERVAS: Información completa -->
-    @if (mostrarBookings) {
-      <div class="bookings-panel">
-        <h3 class="bookings-titulo">Mis reservas ({{ misReservas.length }})</h3>
-
-        @if (misReservas.length > 0) {
-          <div class="bookings-lista">
-            @for (r of misReservas; track r.idReserva) {
-              <div class="booking-detalle-card">
-                <div class="booking-header">
-                  <div>
-                    <h4>{{ r.nombreAlojamiento }}</h4>
-                    <span class="booking-id">Código: {{ r.idReserva }}</span>
-                  </div>
-                  <span class="booking-estado">{{ r.estado }}</span>
-                </div>
-
-                <div class="booking-grid">
-                  <div><strong>Alojamiento:</strong> {{ r.nombreAlojamiento }}</div>
-                  <div><strong>Ciudad:</strong> {{ obtenerCiudad(r) }}</div>
-                  <div><strong>Fecha de llegada:</strong> {{ r.fechaEntrada }}</div>
-                  <div><strong>Fecha de salida:</strong> {{ r.fechaSalida }}</div>
-                  <div><strong>Número de huéspedes:</strong> {{ r.huespedes }} adultos ({{ r.noches }} noches)</div>
-                  <div><strong>Huésped titular:</strong> {{ r.nombreHuesped }} ({{ r.correoHuesped }})</div>
-                </div>
-
-                <div class="booking-footer">
-                  <span>Valor total:</span>
-                  <strong class="booking-precio">${{ r.valorTotal | number }}</strong>
-                </div>
-              </div>
-            }
-          </div>
-        } @else {
-          <div class="sin-reservas-box">
-            <p>No existen reservas registradas en este momento.</p>
-          </div>
-        }
-      </div>
-    }
+    <!-- CAMBIO: Se eliminó el panel desplegable de bookings completo -->
+    <!-- El bloque @if (mostrarBookings) { ... } fue eliminado -->
 
     <app-button [textButton]="'Volver al Inicio'" [variant]="'base-button'" (buttonClick)="onPagar()"></app-button>
   </section>

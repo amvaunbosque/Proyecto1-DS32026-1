@@ -2,12 +2,12 @@ import { Component, OnInit, inject } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Button } from '../button/button';
 import { HomePage } from '../home-page/home-page';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router'; // CAMBIO: Se eliminó RouterLink de aquí, ya no se usa en el TS
 import { ReservaService, Reserva } from '../../core/services/reserva.service';
-import { CASAS } from '../../core/data/data/casas';
+// CAMBIO: Se eliminó import de CASAS
 
 @Component({
-  imports: [Button, HomePage, DecimalPipe],
+  imports: [Button, HomePage, DecimalPipe], // CAMBIO: Se eliminó RouterLink de los imports
   selector: 'app-user-page',
   styleUrl: './user-page.css',
   templateUrl: './user-page.html',
@@ -19,8 +19,8 @@ export class UserPage implements OnInit {
   // Lista real de reservas traídas del servicio / localStorage
   misReservas: Reserva[] = [];
 
-  // Controla si se muestra la vista completa de "Mis reservas / Bookings"
-  mostrarBookings: boolean = false;
+  // CAMBIO: Se eliminó mostrarBookings
+  // mostrarBookings: boolean = false;
   mostrarConfiguration: boolean = false;
 
   // Bloque "reservas" superior (los 2 recuadros)
@@ -42,12 +42,14 @@ export class UserPage implements OnInit {
     this.misReservas = this.reservaService.obtenerReservas();
   }
 
-  // Obtiene la ciudad del alojamiento (incluso si la reserva se guardó antes de añadir el campo)
+  // CAMBIO: Se eliminó el método obtenerCiudad()
+  /*
   obtenerCiudad(reserva: Reserva): string {
     if (reserva.ciudad) return reserva.ciudad;
     const casa = CASAS.find(c => c.id === reserva.alojamientoId);
     return casa?.ciudad ?? 'Ciudad no especificada';
   }
+  */
 
   // Obtiene el nombre del usuario de la última reserva o muestra uno por defecto
   get nombreUsuario(): string {
@@ -72,10 +74,6 @@ export class UserPage implements OnInit {
 
   seleccionarMetodo(index: number): void {
     this.tarjetaActiva = index;
-  }
-
-  toggleBookings(): void {
-    this.router.navigate(['/booking']);
   }
 
   onPagar(): void {

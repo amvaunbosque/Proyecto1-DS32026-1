@@ -73,7 +73,7 @@ export class ApartmentsAccommodationsDetailsPage implements OnInit {
   }
 
   volver(): void {
-    this.router.navigate(['/filter'], { queryParams: { tipo: 'apartamentos' } });
+    this.router.navigate(['/home']);
   }
 
   reservar(): void {
@@ -101,7 +101,8 @@ export class ApartmentsAccommodationsDetailsPage implements OnInit {
       fechaEntrada: this.fechaEntrada,
       fechaSalida: this.fechaSalida,
       valorTotal: this.valorTotal,
-      estado: this.estadoReserva
+      estado: this.estadoReserva,
+      ciudad: this.alojamiento.ciudad,
     };
 
     this.reservaService.guardarReserva(nuevaReserva);

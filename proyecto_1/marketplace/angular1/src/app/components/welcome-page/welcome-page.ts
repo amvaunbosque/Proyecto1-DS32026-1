@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core'; // se importa inject
+import { Router } from '@angular/router'; // se importa Router
 import { Button } from '../button/button';
-import { RegistryPage } from '../registry-page/registry-page';
-
 @Component({
-  imports: [Button, RegistryPage],
+  imports: [Button],
   selector: 'app-welcome-page',
   styleUrl: './welcome-page.css',
   templateUrl: './welcome-page.html',
@@ -12,14 +11,16 @@ export class WelcomePage {//declaración de objetos
   title: String = "BIENVENIDO";
   subtitle: String = "Encuentra tu próximo lugar, siéntete en casa";
 
-  onLogin() {
-    console.log('iniciar sesión');
+  // inyección del Router
+  private router = inject(Router);
+
+  onLogin(): void {
+    // navegación en lugar de console.log
+    this.router.navigate(['/home']);
   }
 
-  onRegister() {
-    console.log('registrarse');
-    this.mostrarRegistro = true;
+  onRegister(): void {
+    // navegación en lugar de console.log y cambio de bandera
+    this.router.navigate(['/registry']);
   }
-
-  mostrarRegistro: boolean = false;
-  }
+}

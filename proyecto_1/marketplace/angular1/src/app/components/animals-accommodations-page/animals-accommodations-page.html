@@ -1,13 +1,12 @@
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
-
 <section class="registro">
   <button class="filtro-btn" (click)="volver()">← Volver</button>
 
   <div class="filtros">
     @for (cat of categorias; track cat) {
-      <button class="filtro-btn" [class.selected]="categoriaActiva === cat" (click)="seleccionar(cat)">
+      <button
+        class="filtro-btn"
+        [class.selected]="categoriaActiva === cat"
+        (click)="seleccionar(cat)">
         {{ cat }}
       </button>
     }

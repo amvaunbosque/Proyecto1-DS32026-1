@@ -86,13 +86,115 @@
     flex: 1;
 }
 
+.cards-destinos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /*esto hace que sean las 2 columnas y se repita tantas veces tenga elementos*/
+    gap: 0.75rem;
+}
+
+.card-destino {
+    margin-top: 2rem;
+    position: relative;
+    aspect-ratio: 4 / 3; /*para que se vean má cuadrados como en el mockup*/
+    border-radius: 0.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    background: #000;
+}
+
+.card-destino img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.card-destino:hover img {
+    transform: scale(1.05);
+}
+
+.card-destino::after{
+    content: '';/*obligatorio para uqe le pseudo elemento exista*/
+    position: absolute;
+    left: 0; /*para que se vean má cuadrados como en el mockup*/
+    right: 0;
+    bottom: 0;
+    height: 30%;
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.95) 0%, /*abao negr casi solido*/
+        rgba(0,0,0,0.7) 40%,/*medio negro semitrasnparente*/
+        rgba(0,0,0,0) 100%/*arriba transparente*/
+    );
+    z-index: 1;/*debajo de los tangs aparece la imagen*/
+    pointer-events: none;/*que no bloquee clics*/
+}
+
+.card-tag { /*la informaciónd que está en la cajita, a la derecha*/
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    color:#ffd966;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 1.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    z-index: 2; /*propiedad que controla el orden de apilamiento de lo elementos superpuestos en el eje de profunciddad*/
+}
+
+.card-tag.top-right {
+    top: 2.3rem;
+    right: 1.8rem;
+}
+
+.card-tag.top-left {
+    top: 2.3rem;
+    left: 1.8rem;
+}
+
+.card-tag.name {
+    background: transparent;   /* sin fondo, como en el mockup */
+    color: #fff;
+    font-size: 3.85rem;
+    font-weight: 700;
+    padding: 0;
+    margin-left: 0.6rem;
+
+}
+
+.card-tag.location {
+    background: transparent;
+    color: #e0e0e0;
+    font-size: 1.7rem;
+    font-weight: 400;
+    padding: 0;
+    margin-left: 1.2rem;
+    margin-bottom: 0.6rem;
+}
+
+.card-tag.rating {
+    background: rgba(0, 0, 0, 0.7);
+    color:#ffd966;
+}
+.card-info {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.ver-mas {
+  background-color: #f0f0f0;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
 app-button { /*sin punto es selecitor de tipo (etiqueta o elemento)*/
     display: block;
     width: fit-content;
     margin: 1.5rem auto 0;
 }
-
-/* Estilos para los componentes hijos (si necesitas forzar algo) */
 app-houses-accommodations-page,
 app-apartments-accommodations-page,
 app-animals-accommodations-page,

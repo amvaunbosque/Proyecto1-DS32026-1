@@ -85,7 +85,7 @@ export class HousesAccommodationsDetailsPage implements OnInit {
   }
 
   volver(): void { //navega a otra página pasando un paárametro por la url
-    this.router.navigate(['/filter'], //mueve al usario entre rutas, el navigate ejecuta la navegación al recibir como primer argumento un array
+    this.router.navigate(['/home'], //mueve al usario entre rutas, el navigate ejecuta la navegación al recibir como primer argumento un array
       { queryParams: // son las opciones de navegación 
       { tipo: 'casas' } }); //es el tipo de opción a dónde regresa
   }
