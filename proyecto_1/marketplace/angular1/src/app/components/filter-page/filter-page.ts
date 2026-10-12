@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Alojamiento } from '../../core/model/model';
-import { CASAS } from '../../core/data/data/casas';
-import { APARTAMENTOS } from '../../core/data/data/apartamentos';
-import { ANIMALES } from '../../core/data/data/animales';
+import { MarketplaceDataService } from '../../core/services/marketplace-data.service';
 import { esActivo, capacidadDe, precioNumerico } from '../../core/utils/reglas-reserva';
 import { HousesAccommodationsPage } from '../houses-accommodations-page/houses-accommodations-page';
 import { ApartmentsAccommodationsPage } from '../apartments-accommodations-page/apartments-accommodations-page';
@@ -54,11 +53,8 @@ export class FilterPage implements OnInit {
     animales: 'animal',
   };
 
-  private todos: Alojamiento[] = [
-    ...(CASAS as any[]).map(a => ({ ...a, tipo: 'casa' })),
-    ...(APARTAMENTOS as any[]).map(a => ({ ...a, tipo: 'apartamento' })),
-    ...(ANIMALES as any[]).map(a => ({ ...a, tipo: 'animal' })),
-  ];
+  private datos = inject(MarketplaceDataService);
+  private todos = toSignal(this.datos.getAlojamientos(), { initialValue: [] as Alojamiento[] });
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
@@ -74,7 +70,7 @@ export class FilterPage implements OnInit {
   }
 
   get filtrados(): Alojamiento[] {
-    let lista = this.todos.filter((a: any) => a.activo !== false);
+    let lista = this.todos().filter((a: any) => a.activo !== false);
 
     if (this.tipoUrl && this.tipoPorUrl[this.tipoUrl]) {
       lista = lista.filter(a => a.tipo === this.tipoPorUrl[this.tipoUrl]);

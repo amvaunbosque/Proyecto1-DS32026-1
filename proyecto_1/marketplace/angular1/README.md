@@ -1,59 +1,43 @@
-# Angular1
+# Marketplace de Alojamientos
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.0.
+Plataforma web interactiva desarrollada en Angular para la búsqueda, filtrado, exploración y reserva de diversas opciones de alojamiento (casas, apartamentos y guarderías/hospedajes para animales). La solución implementa una arquitectura basada en componentes independientes (Standalone Components) y un sistema dinámico de rutas y filtros.
 
-## Development server
+---
 
-To start a local development server, run:
+## Integrantes
 
-```bash
-ng serve
-```
+- Anna M.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## Tecnologías Utilizadas
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **Frontend:** Angular 17+ (Standalone Components, Signals, Control Flow `@if`, `@for`, `@switch`)
+- **Lenguaje:** TypeScript 5+
+- **Estilos:** CSS3 nativo (CSS Grid, Flexbox, Glassmorphism, diseño responsivo)
+- **Navegación:** Angular Router (`ActivatedRoute`, `RouterLink`, query parameters)
+- **Control de versiones:** Git / GitHub
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Requisitos para Ejecutar la Aplicación
 
-```bash
-ng generate --help
-```
+Asegúrate de contar con las siguientes herramientas instaladas en tu equipo antes de comenzar:
 
-## Building
+- **Node.js:** Versión `v18.19.0` o superior (se recomienda `v20.x LTS`)
+- **npm:** Versión `9.x` o superior (incluido junto con Node.js)
+- **Angular CLI:** Versión `17.x` o superior instalada de forma global (`npm install -g @angular/cli`)
+- **Navegador Web:** Google Chrome, Mozilla Firefox, Microsoft Edge o cualquier navegador moderno
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## Instrucciones de Instalación
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1. **Clonar el repositorio:**
+   ```bash
+   git clone <URL_DEL_REPOSITORIO>
+   cd Marketplace
+   cd angular1
+   node -v
+   npm install
+   npm start

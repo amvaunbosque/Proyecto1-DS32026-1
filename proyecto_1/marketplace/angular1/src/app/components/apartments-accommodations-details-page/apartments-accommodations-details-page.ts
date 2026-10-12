@@ -1,5 +1,5 @@
-import { APARTAMENTOS } from './../../core/data/data/apartamentos';
-import { Component, OnInit, inject } from '@angular/core';
+import { MarketplaceDataService } from '../../core/services/marketplace-data.service';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alojamiento } from '../../core/model/model';
@@ -35,6 +35,8 @@ export class ApartmentsAccommodationsDetailsPage implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private reservaService = inject(ReservaService);
+  private datos = inject(MarketplaceDataService);
+  private cdr = inject(ChangeDetectorRef);
 
   alojamiento: Alojamiento | undefined;
   imagenPrincipal = '';
@@ -58,14 +60,33 @@ export class ApartmentsAccommodationsDetailsPage implements OnInit {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    const encontrado = APARTAMENTOS.find(c => c.id === id);
-    this.alojamiento = encontrado && esActivo(encontrado) ? encontrado: undefined;
+    this.datos.getAlojamientoPorId('apartamento', id).subscribe(encontrado => {
+      this.alojamiento = encontrado && esActivo(encontrado) ? encontrado : undefined;
+      if (this.alojamiento) {
+        this.imagenPrincipal = this.alojamiento.imagenes?.[0] ?? this.alojamiento.imagen;
+        this.cargarResenas(this.alojamiento.id);
+      }
+      this.cdr.markForCheck();
+    });
     
     this.construirCalendario();
+  }
 
-    if (this.alojamiento) {
-      this.imagenPrincipal = this.alojamiento.imagenes?.[0] ?? this.alojamiento.imagen;
-    }
+  // las reseñas del JSON reemplazan a las de ejemplo cuando el alojamiento tiene alguna
+  private cargarResenas(id: number): void {
+    this.datos.getResenas(id).subscribe(resenas => {
+      if (!resenas.length) return;
+      this.comentarios = resenas.map(r => ({
+        nombre: r.usuario,
+        ubicacion: '',
+        avatar: 'https://i.pravatar.cc/150?u=' + encodeURIComponent(r.usuario),
+        fecha: '',
+        tipo: `Calificación ${r.calificacion}/5`,
+        texto: r.comentario,
+        expandido: false,
+      }));
+      this.cdr.markForCheck();
+    });
   }
 
   seleccionarImagen(img: string): void {

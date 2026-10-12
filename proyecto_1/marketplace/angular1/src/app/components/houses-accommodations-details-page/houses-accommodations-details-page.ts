@@ -1,5 +1,5 @@
-import { CASAS } from './../../core/data/data/casas';
-import { Component, OnInit, inject } from '@angular/core';
+import { MarketplaceDataService } from '../../core/services/marketplace-data.service';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Alojamiento } from '../../core/model/model';
@@ -35,6 +35,8 @@ export class HousesAccommodationsDetailsPage implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private reservaService = inject(ReservaService);
+  private datos = inject(MarketplaceDataService);
+  private cdr = inject(ChangeDetectorRef);
 
   alojamiento: Alojamiento | undefined; //declaración de prop akojamiento que por undefined puede no tener valor
   imagenPrincipal = ''; //siempre es string e inicaliza vacío para evitar problemas en el template (el que define la vista de un componente)
@@ -67,17 +69,34 @@ export class HousesAccommodationsDetailsPage implements OnInit {
       paramMap.get('id')); //paraMap lee parámetro de ruta id, entonces devuleve string
 
     //buscar alojamiento
-    const encontrado = CASAS.find(c => c.id === id);
-    this.alojamiento = encontrado && esActivo(encontrado) ? encontrado: undefined;
+    this.datos.getAlojamientoPorId('casa', id).subscribe(encontrado => {
+      this.alojamiento = encontrado && esActivo(encontrado) ? encontrado : undefined;
+      if (this.alojamiento) {
+        this.imagenPrincipal = this.alojamiento.imagenes?.[0] ?? this.alojamiento.imagen;
+        this.cargarResenas(this.alojamiento.id);
+      }
+      this.cdr.markForCheck();
+    });
           
       //calendario
       this.construirCalendario();
+  }
 
-    //comprobar y asignar la imagen
-    if (this.alojamiento) {
-      this.imagenPrincipal = this.alojamiento.imagenes?. //?. es encadenamiento opcional, si img existe devuelve el indice, sino devuelve undefined
-      [0] ?? this.alojamiento.imagen; //?? es nulish coalescing, permite asignar valor por defecto solo cuando una expresión es null o undefined
-      }
+  // las reseñas del JSON reemplazan a las de ejemplo cuando el alojamiento tiene alguna
+  private cargarResenas(id: number): void {
+    this.datos.getResenas(id).subscribe(resenas => {
+      if (!resenas.length) return;
+      this.comentarios = resenas.map(r => ({
+        nombre: r.usuario,
+        ubicacion: '',
+        avatar: 'https://i.pravatar.cc/150?u=' + encodeURIComponent(r.usuario),
+        fecha: '',
+        tipo: `Calificación ${r.calificacion}/5`,
+        texto: r.comentario,
+        expandido: false,
+      }));
+      this.cdr.markForCheck();
+    });
   }
 
   seleccionarImagen(img: string): void {//función que cambia la imagen principal para pasarla como argumento

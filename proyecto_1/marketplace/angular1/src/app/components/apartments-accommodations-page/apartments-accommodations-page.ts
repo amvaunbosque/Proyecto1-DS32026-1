@@ -1,5 +1,6 @@
-import { APARTAMENTOS } from './../../core/data/data/apartamentos';
+import { MarketplaceDataService } from '../../core/services/marketplace-data.service';
 import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
 import { Alojamiento } from '../../core/model/model';
 import { esActivo } from '../../core/utils/reglas-reserva';
@@ -13,6 +14,7 @@ import { esActivo } from '../../core/utils/reglas-reserva';
 
 export class ApartmentsAccommodationsPage {
   private router = inject(Router);
+  private datos = inject(MarketplaceDataService);
 
   //propiedades de titulo y filtros
     titulo = 'APARTAMENTOS';
@@ -24,10 +26,10 @@ export class ApartmentsAccommodationsPage {
     //solo se ven 2 a la vez
     limiteVisibles = 2;
   
-    alojamientos: Alojamiento[] = APARTAMENTOS; //lista completa de alojamientos de tipo casas
+    alojamientos = toSignal(this.datos.getAlojamientosPorTipo('apartamento'), { initialValue: [] as Alojamiento[] }); //lista completa de alojamientos de tipo casas
 
   get filtrados(): Alojamiento[] { //devuelve los alojamientos filtrados según la categoría activa
-  const activos = this.alojamientos.filter(esActivo);
+  const activos = this.alojamientos().filter(esActivo);
   return this.categoriaActiva === 'Apartamentos'
     ? activos
     : activos.filter(a => a.categorias.includes(this.categoriaActiva));

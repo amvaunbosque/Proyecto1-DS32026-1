@@ -23,4 +23,47 @@ export interface Alojamiento { //información complementaria
     imagenes?: string[];
     capacidad?: number;
     activo?: boolean;
+    tarifaLimpieza?: number;
+    servicios?: string[];
+    reglas?: string[];
+}
+
+// Estructura tal como viene en marketplace-data.json
+export interface AlojamientoJson {
+    id: number;
+    nombre: string;
+    descripcion: string;
+    ciudad: string;
+    ubicacion: string;
+    tipo: string;
+    capacidad?: number;
+    habitaciones?: number;
+    camas?: number;
+    banos?: number;
+    area?: number;
+    precioNoche: number;
+    tarifaLimpieza?: number;
+    calificacion: number;
+    activo: boolean;
+    imagenPrincipal: string;
+    imagenes: string[];
+    servicios: string[];
+    reglas: string[];
+    // campos complementarios
+    pais?: string;
+    imagen?: string;
+    categorias?: string[];
+}
+
+export interface Resena {
+    id: number;
+    alojamientoId: number;
+    usuario: string;
+    calificacion: number;
+    comentario: string;
+}
+
+export interface MarketplaceData {
+    alojamientos: AlojamientoJson[];
+    resenas: Resena[];
 }

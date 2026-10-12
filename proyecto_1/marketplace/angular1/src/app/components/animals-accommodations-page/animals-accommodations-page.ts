@@ -1,5 +1,6 @@
-import { ANIMALES } from './../../core/data/data/animales';
+import { MarketplaceDataService } from '../../core/services/marketplace-data.service';
 import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
 import { Alojamiento } from '../../core/model/model';
 
@@ -20,6 +21,8 @@ function normalizar(texto: string): string {
 
 export class AnimalsAccommodationsPage {
   private router = inject(Router);
+  private datos = inject(MarketplaceDataService);
+  alojamientos = toSignal(this.datos.getAlojamientosPorTipo('animal'), { initialValue: [] as Alojamiento[] });
 
    //propiedades de titulo y filtros
   titulo = 'ANIMALES';
@@ -32,7 +35,7 @@ export class AnimalsAccommodationsPage {
   limiteVisibles = 2;
 
   get filtrados(): Alojamiento[] {
-    const lista = ANIMALES.filter((a: any) => a.activo !== false);
+    const lista = this.alojamientos().filter(a => a.activo !== false);
     if (!this.categoriaActiva || this.categoriaActiva === 'Todos') {
       return lista;
     }

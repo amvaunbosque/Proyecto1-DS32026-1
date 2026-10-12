@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Alojamiento } from '../../core/model/model';
-import { CASAS } from '../../core/data/data/casas';
+import { MarketplaceDataService } from '../../core/services/marketplace-data.service';
 import { validarReserva, precioNumerico, esActivo, capacidadDe } from '../../core/utils/reglas-reserva';
 
 @Component({
@@ -13,6 +14,7 @@ import { validarReserva, precioNumerico, esActivo, capacidadDe } from '../../cor
 })
 export class HousesAccommodationsPage {
   private router = inject(Router);
+  private datos = inject(MarketplaceDataService);
   private route = inject(ActivatedRoute);
 
   //propiedades de titulo y filtros
@@ -24,7 +26,7 @@ export class HousesAccommodationsPage {
   limiteVisibles = 2;
 
   ciudadFiltro: string |null = null;
-  alojamientos: Alojamiento[] = CASAS; //lista completa de alojamientos de tipo casas
+  alojamientos = toSignal(this.datos.getAlojamientosPorTipo('casa'), { initialValue: [] as Alojamiento[] }); //lista completa de alojamientos de tipo casas
 
   constructor() {
     // escucha los cambios en queryParams (por si el usuario navega entre ciudades sin salir de la página)
@@ -35,7 +37,7 @@ export class HousesAccommodationsPage {
   }
 
   get filtrados(): Alojamiento[] { //devuelve los alojamientos filtrados según la categoría activa
-    let lista = this.alojamientos.filter(esActivo);
+    let lista = this.alojamientos().filter(esActivo);
 
     //filtro por ciudad (si viene en la URL)
     if (this.ciudadFiltro) {

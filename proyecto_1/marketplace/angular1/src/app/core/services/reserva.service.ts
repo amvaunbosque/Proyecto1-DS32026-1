@@ -20,7 +20,7 @@ export interface Reserva { //información de la reserva
 })
 export class ReservaService {
   private readonly STORAGE_KEY = 'mis_reservas';
-  
+
   // almacenamiento en memoria
   private reservasEnMemoria: Reserva[] = [];
 
@@ -28,22 +28,41 @@ export class ReservaService {
     this.cargarDesdeLocalStorage();
   }
 
+  //generar identificador unico de reserva (id)
+  generarId(): string {
+    return 'RES-'+ Date.now().toString(36).toUpperCase(); //crea un punto de tiempo y valor
+  }
+
   // guarda la reserva tanto en memoria como en localStorage
   guardarReserva(nuevaReserva: Reserva): void {
     this.reservasEnMemoria.push(nuevaReserva);
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.reservasEnMemoria));
+    this.persistir;
   }
 
   // obtiene todas las reservas guardadas
   obtenerReservas(): Reserva[] {
-    return this.reservasEnMemoria;
+    return [...this.reservasEnMemoria];
   }
 
   // recupera los datos de localStorage al iniciar la app
   private cargarDesdeLocalStorage(): void {
-    const datosGuardados = localStorage.getItem(this.STORAGE_KEY);
-    if (datosGuardados) {
-      this.reservasEnMemoria = JSON.parse(datosGuardados);
+    try{
+      const datosGuardados = localStorage.getItem(this.STORAGE_KEY);
+      if (datosGuardados) {
+        const date =JSON.parse(datosGuardados);
+      this.reservasEnMemoria = Array.isArray(date) ?  date: [];
+    }}catch{
+      this.reservasEnMemoria = [];
     }
   }
+
+  //etsado de la reserva (localStorage)
+  private persistir() : void {
+    try{
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.reservasEnMemoria));
+    }catch{
+    }
+  }
+
+
 }
