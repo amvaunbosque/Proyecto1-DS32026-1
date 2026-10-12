@@ -1,0 +1,48 @@
+<section class="bookings-contenedor">
+    <!-- btn de bookings mis reservas -->
+    <button class="btn-bookings" (click)="toggleBookings()">
+    {{ mostrarBookings ? '▲ Ocultar Bookings (Mis reservas)' : '▼ Ver Bookings (Información completa de reservas)' }}
+    </button>
+
+    <!-- 3.6 consultas de reselvas: la información más completa -->
+    @if (mostrarBookings) {
+    <div class="bookings-panel">
+    <h3 class="bookings-titulo">Mis reservas ({{ misReservas.length }})</h3>
+
+    @if (misReservas.length > 0) {
+        <div class="bookings-lista">
+        @for (r of misReservas; track r.idReserva) {
+            <div class="booking-detalle-card">
+            <div class="booking-header">
+                <div>
+                <h4>{{ r.nombreAlojamiento }}</h4>
+                <span class="booking-id">Código: {{ r.idReserva }}</span>
+                </div>
+                <span class="booking-estado">{{ r.estado }}</span>
+            </div>
+
+            <div class="booking-grid">
+                <div><strong>Alojamiento:</strong> {{ r.nombreAlojamiento }}</div>
+                <div><strong>Ciudad:</strong> {{ r.ciudad ?? 'Ciudad no especificada' }}</div>
+                <div><strong>Fecha de llegada:</strong> {{ r.fechaEntrada }}</div>
+                <div><strong>Fecha de salida:</strong> {{ r.fechaSalida }}</div>
+                <div><strong>Número de huéspedes:</strong> {{ r.huespedes }} adultos ({{ r.noches }} noches)</div>
+                <div><strong>Huésped titular:</strong> {{ r.nombreHuesped }} ({{ r.correoHuesped }})</div>
+            </div>
+
+            <div class="booking-footer">
+                <span>Valor total:</span>
+                <strong class="booking-precio">${{ r.valorTotal | number }}</strong>
+            </div>
+            </div>
+        }
+        </div>
+    } @else {
+        <!-- mensaje apropiado cuando no existen reservas -->
+        <div class="sin-reservas-box">
+        <p>No existen reservas registradas en este momento.</p>
+        </div>
+    }
+    </div>
+}
+</section>

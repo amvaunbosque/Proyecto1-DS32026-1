@@ -1,0 +1,294 @@
+
+.registro {/*contenedor principal*/
+    max-width: 45rem;
+    margin: 0 auto;
+    padding: 1.5rem 0 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    box-sizing: border-box;
+}
+
+.icon-circle {
+    position: absolute; 
+    top: 1.5rem;
+    left: 1.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: #4C6B4F;
+}
+
+.top-bar {/*barra principal (ciruclo + cirluclo + escrto)*/
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 2.3rem 1.5rem 0 6rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.top-bar .icon {
+    padding: 1.5rem 1.25rem 3rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    box-sizing: border-box;
+}
+
+.top-bar .icon-circle {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: #4C6B4F;
+    flex-shrink: 0;
+}
+
+.top-bar .text-complement {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0;
+    color: #1a1a1a;
+    flex: 1; /* empuja las acciones a la derecha */
+}
+
+.top-bar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.top-bar-actions .dot {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background: #4C6B4F;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.menu-icon {
+    font-size: 1.25rem;
+    color: #4C6B4F;
+    cursor: pointer;
+    letter-spacing: -0.15rem;
+    margin-left: 0.25rem;
+}
+
+.section-label {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-align: left;
+}
+
+.opciones-fila {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.circulos-fila {
+    display: flex;
+    justify-content: flex-start;  /* pegados a la izquierda */
+    gap: 1rem;
+}
+
+.cards-fila {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1rem;
+}
+
+.opcion-box {
+    flex: 1;
+    height: 15rem;
+    border-radius: 0.625rem;
+    background: #CBD3D8;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.opcion-box.selected {
+    background: #3F5B40;
+}
+
+.circulo {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    padding: 5rem;
+    
+    width: 4.125rem;
+    height: 4.125rem;
+
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #CBD3D8;
+
+    cursor: pointer;
+    border: 0.188rem solid transparent;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.circulo.selected {
+    border-color: #3F5B40;
+}
+.metodo-card { /*tarjetas verdes/grises */
+    flex: 1;                     
+    height: 19.625rem;
+    border-radius: 0.625rem;
+    background: #CBD3D8;
+    padding: 0.875rem;
+    box-sizing: border-box;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    transition: background 0.2s ease; /*animación de cambió al click */
+}
+
+.metodo-card.selected {
+    background: #3F5B40;
+}
+
+.indicador { /* indicador (círculo) arriba a la derecha del cuadro reservado */
+    position: absolute;
+    top: 0.625rem;
+    right: 0.625rem;
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 50%;
+    background: #A8B4BA;
+}
+
+.metodo-card.selected .indicador {
+    background: #E3A13A;
+}
+
+.linea {/* líneas dentro de las cards */
+    height: 0.375rem;
+    border-radius: 0.188rem;
+    background: #A8B4BA;
+}
+
+.linea-larga { width: 80%; }
+.linea-corta { width: 50%; }
+
+.metodo-card.selected .linea-larga { background: #E3A13A; }
+.metodo-card.selected .linea-corta { background: #4C6B4F; }
+
+app-button {
+    display: block;
+    width: 100%;        
+    margin-top: 0.5rem;
+}
+
+/* Info del usuario en la barra superior */
+.user-info-header {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-subtext {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 0.75rem;
+    color: #555;
+    margin: 0.15rem 0 0 0;
+}
+
+/* Texto dentro de las cajas superiores */
+.opcion-box {
+    padding: 1rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: #1a1a1a;
+}
+
+.opcion-box.selected {
+    color: #ffffff;
+}
+
+.opcion-titulo {
+    font-family: 'Funnel Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.opcion-detalle {
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 0.85rem;
+    margin: 0.25rem 0 0 0;
+    opacity: 0.9;
+}
+
+/* Contenido esencial dentro de metodo-card (cajas con líneas naranjas) */
+.info-esencial-reserva {
+    font-family: 'Funnel Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 1rem;
+    color: #1a1a1a;
+}
+
+.metodo-card.selected .info-esencial-reserva {
+    color: #ffffff;
+}
+
+.badge-estado {
+    align-self: flex-start;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    background: #E3A13A;
+    color: #1a1a1a;
+}
+
+.esencial-titulo {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0.25rem 0 0 0;
+}
+
+.esencial-ciudad,
+.esencial-fechas,
+.esencial-total {
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.lineas-decorativas {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
+/* Botón de Bookings */
+.btn-bookings {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.9rem 1.2rem;
+    background: #3F5B40;
+    color: #ffffff;
+    border: none;
+    border-radius: 0.625rem;
+    font-family: 'Funnel Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-bookings:hover {
+    background: #2E4430;
+}

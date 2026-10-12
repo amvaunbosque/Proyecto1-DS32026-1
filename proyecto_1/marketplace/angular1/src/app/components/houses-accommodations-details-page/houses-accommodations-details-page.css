@@ -1,0 +1,862 @@
+:host {
+  display: block;
+  font-family: 'Funnel Sans', sans-serif;
+  background: #F2F6FA;
+  color: #1a1a1a;
+  padding: 5rem;
+}
+
+.detalle {
+  max-width: 45rem;
+  margin: 0 auto;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 1rem;
+}
+
+.volver {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  border: none;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  background: rgba(255, 255, 255, 0.9);
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.contenido {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tag {
+  align-self: flex-start;
+  background: #CBD3D8;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.titulo {
+  font-family: 'Dela Gothic One', sans-serif;
+  font-size: 2.5rem;
+  margin: 0;
+  color: #000;
+}
+
+.ubicacion {
+  margin: 0;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.miniatura {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: 3px solid transparent;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.miniatura.activa {
+  border-color: #4C6B4F;
+}
+
+.seccion {
+  margin: 0.5rem 0 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.descripcion {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.detalles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.detalles li {
+  background: #CBD3D8;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.detalles strong {
+  display: block;
+  font-size: 1.1rem;
+}
+/* --- SECCIÓN CALENDARIO --- */
+.calendario-seccion {
+  padding: 2rem 0;
+  border-bottom: 1px solid #EAEAEA;
+  color: #222;
+}
+
+.calendario-cabecera h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.calendario-cabecera p {
+  color: #717171;
+  font-size: 0.95rem;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Layout de dos meses */
+.calendario-contenedor {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  background:#7993A0 ;
+  border-radius: 0.6rem;
+  padding: 1.5rem 1.3rem;
+  box-sizing: border-box;
+}
+
+.mes {
+  flex: 1;
+}
+
+.mes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.mes-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color:#f3f2f2;
+  margin: 0;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #222;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.spacer {
+  width: 32px; /* Para equilibrar el flex space-between */
+}
+
+/* Cuadrícula de días */
+.dias-semana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #e7e2e2;
+  margin-bottom: 1rem;
+}
+
+.dias-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.35rem; /* Espacio vertical entre filas */
+}
+
+/* Estilos individuales del día */
+.dia {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  color:#d4c4c4;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.dia span {
+  display: flex;
+  background-color: #3E563E;
+  justify-content: center;
+  align-items: center;
+  width: 2.75rem;
+  height: 2.5rem;
+  border-radius: 0.6rem;
+  z-index: 2;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+/* hover general */
+.dia:not(.deshabilitado):not(.rango-inicio):not(.rango-fin):hover span {
+  border: 0 0 0 1px #ded8d8;
+}
+
+/* día enfocado (como el 9 de Nov en la imagen) */
+.dia.enfocado span {
+  border: 0 0 0 1px #aca4a4;
+}
+
+/* días pasados / deshabilitados */
+.dia.deshabilitado {
+  cursor: not-allowed;
+}
+.dia.deshabilitado span {
+  color: #9f9595;
+  text-decoration: line-through;
+}
+
+/* --- LÓGICA VISUAL DEL RANGO DE FECHAS --- */
+/* fondo gris para los días intermedios */
+.dia.rango-medio{
+  background-color: #CED9DF;
+  color: #f0efef;
+  border-radius: 0.8rem;
+}
+
+/* gradiente para que el gris empiece a la mitad del día 18 */
+.dia.rango-inicio {
+  background: linear-gradient(to right, transparent 50%, #93adbb 50%);
+  border-radius: 0.8rem;
+}
+
+/* gradiente para que el gris termine a la mitad del día 21 */
+.dia.rango-fin {
+  background: linear-gradient(to left, transparent 50%, #93adbb 50%);
+  border-radius: 0.8rem;
+}
+
+/* bolita negra para el inicio y fin */
+.dia.rango-inicio span,
+.dia.rango-fin span,
+.dia.rango-medio span {
+  background-color:#CED9DF;
+  color: #222;
+  border-radius: 0.8rem;
+}
+
+/* footer del calendario */
+.calendario-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+/* --- SECCIÓN RESEÑAS --- */
+.reseñas-seccion {
+  padding: 2rem 0;
+  color: #222;
+}
+
+.reseñas-cabecera h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.2rem 0;
+}
+
+.link-ayuda {
+  color: #717171;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  display: inline-block;
+  margin-bottom: 2rem;
+}
+
+/* --- Cuadrícula de Categorías (Puntuaciones) --- */
+.valoraciones-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Columna especial con borde derecho */
+.valoracion-general {
+  flex: 1.5; /* Toma un poco más de espacio */
+  border-right: 1px solid #DDDDDD;
+  padding-right: 1.5rem;
+}
+
+.categoria {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.cat-titulo {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.cat-score {
+  font-size: 0.95rem;
+}
+
+.cat-icono {
+  font-size: 1.4rem;
+  margin-top: 0.5rem;
+  color: #222;
+}
+
+/* Barras de progreso */
+.barras-contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 0.5rem;
+}
+
+.barra-fila {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.barra-fondo {
+  flex: 1;
+  height: 4px;
+  background-color: #DDDDDD;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.barra-llena {
+  height: 100%;
+  background-color: #222;
+  border-radius: 2px;
+}
+
+.separador-reseñas {
+  border: none;
+  border-top: 1px solid #EAEAEA;
+  margin: 0 0 2rem 0;
+}
+
+/* --- Etiquetas (Dicho por los huéspedes) --- */
+.etiquetas-seccion h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+}
+
+.etiquetas-contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.etiqueta {
+  background: #FFFFFF;
+  border: 1px solid #DDDDDD;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #222;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  cursor: default;
+}
+
+.etiqueta span {
+  font-weight: 400;
+  color: #717171;
+}
+
+/* --- Comentarios --- */
+.comentarios-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas */
+  gap: 3rem;
+}
+
+.usuario-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.usuario-datos h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.usuario-datos p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #717171;
+}
+
+.comentario-meta {
+  font-size: 0.85rem;
+  color: #222;
+  margin-bottom: 0.8rem;
+}
+
+.estrellas {
+  font-size: 0.7rem;
+}
+
+.comentario-texto {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #222;
+  margin: 0 0 0.5rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limita a 3 líneas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.btn-mostrar-mas-texto {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  color: #222;
+}
+
+.btn-teclado {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.btn-borrar {
+  background: none;
+  border: none;
+  text-decoration: underline;
+  font-weight: 600;
+  color: #222;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+.reserva {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.precio {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.precio strong {
+  font-size: 1.1rem;
+}
+
+.reservar {
+  flex: 1;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.9rem;
+  background: #4C6B4F;
+  color: #fff;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.reservar:hover {
+  background: #3F5B40;
+}
+
+  /* página interna de información de reserva */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.65); /* Oscurece el fondo */
+  backdrop-filter: blur(4px); /* Desenfoca ligeramente lo de atrás */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.modal-card {
+  background: #FFFFFF;
+  width: 100%;
+  max-width: 460px; /* Tamaño de ventana pequeña */
+  border-radius: 20px;
+  padding: 2.2rem 1.5rem 1.5rem;
+  position: relative;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: aparecerModal 0.25s ease-out;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes aparecerModal {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Botón circular esquina superior derecha */
+.btn-cerrar-modal {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #CCC;
+  background: #FFF;
+  color: #333;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cerrar-modal:hover {
+  background: #F0F0F0;
+  border-color: #222;
+}
+
+/* Título "Información de reserva" */
+.modal-header-box {
+  border: 1px solid #DDD;
+  border-radius: 8px;
+  padding: 0.5rem;
+  text-align: center;
+  background: #F9F9F9;
+}
+
+.modal-header-box h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Campos de texto (Nombre y Correo) */
+.modal-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.input-wireframe {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid #CCC;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-wireframe:focus {
+  border-color: #3B4536;
+  background: #FCFCFC;
+}
+
+/* Caja contenedora de Detalles */
+.detalles-reserva-box {
+  border: 1px solid #CCC;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.detalles-reserva-header {
+  background: #F2F4F7;
+  padding: 0.5rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #CCC;
+  color: #222;
+}
+
+.detalles-reserva-body {
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.datos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+/* Cajitas individuales de información */
+.dato-chip {
+  border: 1px solid #E0E0E0;
+  background: #FAFAFA;
+  padding: 0.45rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dato-chip.full-width {
+  width: 75%;
+  box-sizing: border-box;
+}
+
+.dato-chip.valor-total {
+  width: 75%;
+  margin-top: 0.2rem;
+  background: #F0F4F0;
+  border-color: #3B4536;
+  color: #1a1a1a;
+  font-size: 0.85rem;
+}
+
+.chip-label {
+  color: #666;
+  font-weight: 600;
+}
+
+/* Estado de la reserva */
+.estado-seccion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.estado-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.estado-caja {
+  border: 1px solid #3B4536;
+  background: #EBF0EA;
+  color: #2A3325;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+/* Color ámbar/amarillo cuando el estado es PENDIENTE */
+.estado-caja.pendiente {
+  border-color: #D97706;
+  background: #FEF3C7;
+  color: #92400E;
+}
+
+/* Nuevo botón principal para Confirmar Reserva */
+.btn-confirmar-reserva {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background: #3B4536; /* Verde oliva principal */
+  color: #FFF;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-confirmar-reserva:hover:not(:disabled) {
+  background: #2A3325;
+}
+
+/* Estilo cuando ya se confirmó la reserva */
+.btn-confirmar-reserva:disabled {
+  background: #8FA387;
+  cursor: default;
+}
+
+/* Actualizamos Regresar para que sea un botón secundario limpio */
+.btn-regresar {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #CCC;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #333;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-regresar:hover {
+  background: #2A3325;
+}
+.dia.vacio {
+  cursor: default;
+}
+
+/* si solo hay entrada elegida, no pintes el gris hacia la derecha */
+.dia.rango-inicio.sin-fin {
+  background: none;
+}
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.reservar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.reservar:disabled:hover {
+  background: #4C6B4F;
+}
+
+.comentario-texto.expandido {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+/* --- COTIZACIÓN Y DESGLOSE DE TARIFAS --- */
+.cotizacion-previa {
+  background: #FFFFFF;
+  border: 1px solid #CBD3D8;
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.cotizacion-previa .seccion {
+  margin: 0 0 0.4rem 0;
+}
+
+.fila-tarifa {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.linea-total {
+  border: none;
+  border-top: 1px solid #E0E0E0;
+  margin: 0.4rem 0;
+}
+
+.fila-tarifa.total-final {
+  font-size: 1.05rem;
+  color: #000;
+}
+
+.desglose-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+}
+
+.dato-chip.valor-total {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.reservar:disabled {
+  background: #9CA89E;
+  cursor: not-allowed;
+}

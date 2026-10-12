@@ -1,0 +1,432 @@
+@if (alojamiento) {
+  <div class="detalle">
+
+    <div class="hero">
+      <img [src]="imagenPrincipal" [alt]="alojamiento.nombre">
+      <button class="volver" (click)="volver()">← Volver</button>
+    </div>
+
+    <!-- 3.3 Detalle del alojamiento-->
+    <!--===============================-->
+    <div class="contenido">
+      <h1 class="titulo">{{ alojamiento.nombre }}</h1>
+      <p class="ubicacion">{{ alojamiento.ciudad }}</p>
+
+      <span class="tag">{{ alojamiento.categorias.join(', ') }}</span>
+      <p class="precio"><strong>{{ alojamiento.precio }}</strong> por cada noche</p>
+
+      <div class="galeria">
+        @for (img of alojamiento.imagenes ?? []; track $index) {
+          <img
+            class="miniatura"
+            [src]="img"
+            [alt]="alojamiento.nombre"
+            [class.activa]="img === imagenPrincipal"
+            (click)="seleccionarImagen(img)">
+        }
+      </div>
+
+      <h3 class="seccion">Descripción</h3>
+      <p class="descripcion">{{ alojamiento.descripcion }}</p>
+
+      <h3 class="seccion">Detalles</h3>
+      <ul class="detalles">
+        <li><strong>{{ alojamiento.habitaciones ?? '3' }}</strong> Habitaciones</li>
+        <li><strong>{{ alojamiento.banos ?? '2' }}</strong> Baños</li>
+        <li><strong>{{ alojamiento.area ?? '102' }}</strong> m²</li>
+      </ul>
+
+      <!-- sección, lo que este lugar ofrece -->
+      <div class="comodidades-seccion">
+        <h3 class="comodidades-titulo">Lo que este lugar ofrece</h3>
+
+        <ul class="comodidades-lista">
+          <li>
+            <span class="icono">🚪- </span>
+            <span class="texto">Cerradura con llave en la puerta de la habitación. </span>
+          </li>
+          <li>
+            <span class="icono">📶- </span>
+            <span class="texto">Wifi de 49 Mbps.</span>
+          </li>
+          <li>
+            <span class="icono">🧴- </span>
+            <span class="texto">Servicios básicos.</span>
+          </li>
+          <li>
+            <span class="icono">🚘- </span>
+            <span class="texto">Estacionamiento gratuito en las instalaciones.</span>
+          </li>
+          <li>
+            <span class="icono">🐾- </span>
+            <span class="texto">Se permiten mascotas DOMESTICAS.</span>
+          </li>
+          <li>
+            <span class="icono">📺- </span>
+            <span class="texto">Televisión.</span>
+          </li>
+          <li>
+            <span class="icono">🔥- </span>
+            <span class="texto">Chimenea interna con gas y stock de leña. </span>
+          </li>
+          <li>
+            <span class="icono">🧊- </span>
+            <span class="texto">Refrigerador doble puerta.</span>
+          </li>
+        </ul>
+
+        <!-- Elementos tachados (No incluidos) -->
+        <h3 class="comodidades-titulo">Lo que no ofrece</h3>
+        <ul>
+          <li>
+            <span class="icono">🚫- </span>
+            <span class="texto tachado">Detector de monóxido de carbono. </span>
+          </li>
+          <li>
+            <span class="icono">🚫- </span>
+            <span class="texto tachado">Detector de humo.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- calendario de Disponibilidad -->
+      <div class="calendario-seccion">
+
+        <div class="calendario-cabecera">
+          @if (noches > 0) {
+            <h2>{{ noches }} {{ noches === 1 ? 'noche' : 'noches' }} en {{ alojamiento.ciudad }}</h2>
+            <p>{{ fechaEntrada }} - {{ fechaSalida }}</p>
+          } @else {
+            <h2>Selecciona tus fechas</h2>
+            <p>Elige el día de entrada y el de salida</p>
+          }
+        </div>
+
+        <div class="calendario-contenedor">
+
+          <!-- mes izquierdo -->
+          <div class="mes">
+            <div class="mes-header">
+              <button class="nav-btn" (click)="mesAnterior()" [disabled]="!puedeRetroceder" aria-label="Mes anterior">&lt;</button>
+              <h3>{{ tituloIzquierdo }}</h3>
+              <div class="spacer"></div>
+            </div>
+
+            <div class="dias-semana">
+              <span>L</span><span>Ma</span><span>Mi</span><span>J</span><span>V</span><span>S</span><span>D</span>
+            </div>
+
+            <div class="dias-grid">
+              @for (c of mesIzquierdo; track $index) {
+                <div class="dia"
+                    [class.vacio]="!c.fecha"
+                    [class.deshabilitado]="c.pasado"
+                    [class.rango-inicio]="esInicio(c)"
+                    [class.rango-fin]="esFin(c)"
+                    [class.rango-medio]="enRango(c)"
+                    [class.sin-fin]="esInicio(c) && !fechaFin"
+                    (click)="seleccionarDia(c)">
+                  @if (c.fecha) { <span>{{ c.numero }}</span> }
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- mes derecho -->
+          <div class="mes">
+            <div class="mes-header">
+              <div class="spacer"></div>
+              <h3>{{ tituloDerecho }}</h3>
+              <button class="nav-btn" (click)="mesSiguiente()" aria-label="Mes siguiente">&gt;</button>
+            </div>
+
+            <div class="dias-semana">
+              <span>L</span><span>Ma</span><span>Mi</span><span>J</span><span>V</span><span>S</span><span>D</span>
+            </div>
+
+            <div class="dias-grid">
+              @for (c of mesDerecho; track $index) {
+                <div class="dia"
+                    [class.vacio]="!c.fecha"
+                    [class.deshabilitado]="c.pasado"
+                    [class.rango-inicio]="esInicio(c)"
+                    [class.rango-fin]="esFin(c)"
+                    [class.rango-medio]="enRango(c)"
+                    [class.sin-fin]="esInicio(c) && !fechaFin"
+                    (click)="seleccionarDia(c)">
+                  @if (c.fecha) { <span>{{ c.numero }}</span> }
+                </div>
+              }
+            </div>
+          </div>
+
+        </div>
+
+        <div class="calendario-footer">
+          <button class="btn-borrar" (click)="borrarFechas()">Borrar fechas</button>
+        </div>
+      </div>
+
+      <!-- sección: Reseñas -->
+      <div class="reseñas-seccion">
+
+        <div class="reseñas-cabecera">
+          <h2>★ 4,5 · 14 reseñas</h2>
+        </div>
+
+        <!-- cuadrícula de valoraciones por categoría -->
+        <div class="valoraciones-grid">
+
+          <!-- columna 1: Valoración general (Barras) -->
+          <div class="valoracion-general">
+            <span class="cat-titulo">Valoración general</span>
+            <div class="barras-contenedor">
+              <div class="barra-fila"><span>5</span><div class="barra-fondo"><div class="barra-llena" style="width: 85%;"></div></div></div>
+              <div class="barra-fila"><span>4</span><div class="barra-fondo"><div class="barra-llena" style="width: 15%;"></div></div></div>
+              <div class="barra-fila"><span>3</span><div class="barra-fondo"><div class="barra-llena" style="width: 0%;"></div></div></div>
+              <div class="barra-fila"><span>2</span><div class="barra-fondo"><div class="barra-llena" style="width: 0%;"></div></div></div>
+              <div class="barra-fila"><span>1</span><div class="barra-fondo"><div class="barra-llena" style="width: 0%;"></div></div></div>
+            </div>
+          </div>
+
+          <!-- resto de categorías -->
+          <div class="categoria">
+            <span class="cat-titulo">Limpieza</span>
+            <span class="cat-score">5.0</span>
+            <span class="cat-icono">🧼</span>
+          </div>
+          <div class="categoria">
+            <span class="cat-titulo">Exactitud</span>
+            <span class="cat-score">4.9</span>
+            <span class="cat-icono">✔️</span>
+          </div>
+          <div class="categoria">
+            <span class="cat-titulo">Check-in</span>
+            <span class="cat-score">4.7</span>
+            <span class="cat-icono">🔑</span>
+          </div>
+          <div class="categoria">
+            <span class="cat-titulo">Comunicación</span>
+            <span class="cat-score">4.9</span>
+            <span class="cat-icono">💬</span>
+          </div>
+          <div class="categoria">
+            <span class="cat-titulo">Ubicación</span>
+            <span class="cat-score">4.4</span>
+            <span class="cat-icono">🗺️</span>
+          </div>
+          <div class="categoria">
+            <span class="cat-titulo">Precio</span>
+            <span class="cat-score">4.7</span>
+            <span class="cat-icono">🏷️</span>
+          </div>
+        </div>
+
+        <hr class="separador-reseñas">
+
+        <!-- etiquetas: Dicho por los huéspedes -->
+        <div class="etiquetas-seccion">
+          <h3>Dicho por los huéspedes</h3>
+          <div class="etiquetas-contenedor">
+            <button class="etiqueta">📍 Ubicación <span>6</span></button>
+            <button class="etiqueta">🎁 Hospitalidad <span>9</span></button>
+            <button class="etiqueta">🧼 Limpieza <span>2</span></button>
+            <button class="etiqueta">🍳 Cocina <span>2</span></button>
+          </div>
+        </div>
+
+        <!-- comentarios de usuarios -->
+        <div class="comentarios-grid">
+          @for (c of comentarios; track c.nombre) {
+            <div class="comentario-card">
+              <div class="usuario-info">
+                <img [src]="c.avatar" [alt]="c.nombre" class="avatar">
+                <div class="usuario-datos">
+                  <h4>{{ c.nombre }}</h4>
+                  <p>{{ c.ubicacion }}</p>
+                </div>
+              </div>
+
+              <div class="comentario-meta">
+                <span class="estrellas">★★★★★</span> · <span>{{ c.fecha }}</span> · <span>{{ c.tipo }}</span>
+              </div>
+
+              <p class="comentario-texto" [class.expandido]="c.expandido">{{ c.texto }}</p>
+
+              @if (c.texto.length > 120) {
+                <button class="btn-mostrar-mas-texto" (click)="toggleComentario(c)">
+                  {{ c.expandido ? 'Mostrar menos' : 'Mostrar más' }}
+                </button>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="huespedes-campo">
+  <label for="huespedes">Huéspedes (máx. {{ capacidad }})</label>
+  <input id="huespedes" type="number" min="1" [max]="capacidad" [(ngModel)]="huespedes">
+</div>
+
+@if (fechaInicio && errores.length > 0) {
+  <ul class="errores-reserva">
+    @for (e of errores; track e) { <li>{{ e }}</li> }
+  </ul>
+}
+
+@if (cotizacionValida) {
+  <div class="cotizacion-previa">
+    <h3 class="seccion">Detalle del precio</h3>
+    <div class="fila-tarifa">
+      <span>${{ precioPorNoche | number }} x {{ noches }} {{ noches === 1 ? 'noche' : 'noches' }} (Subtotal)</span>
+      <span>${{ subtotal | number }}</span>
+    </div>
+    <div class="fila-tarifa">
+      <span>Tarifa de limpieza</span>
+      <span>${{ tarifaLimpieza | number }}</span>
+    </div>
+    <div class="fila-tarifa">
+      <span>Tarifa de servicio (10%)</span>
+      <span>${{ tarifaServicio | number }}</span>
+    </div>
+    <hr class="linea-total">
+    <div class="fila-tarifa total-final">
+      <span>Total</span>
+      <strong>${{ valorTotal | number }}</strong>
+    </div>
+  </div>
+}
+
+      <div class="reserva">
+        <button class="reservar" (click)="reservar()" [disabled]="!cotizacionValida">
+          {{ noches === 0 ? 'Selecciona fechas en el calendario para reservar' : 'Reservar' }}
+        </button>
+      </div>
+    </div>
+    <!--===============================-->
+
+
+    <!-- 3.5 caja de Detalles de la reserva (alojamiento) -->
+    <!-- ========================-->
+    <!-- pop uo, pagna interna-->
+    @if (mostrarModal) {
+      <div class="modal-overlay" (click)="cerrarModal()">
+        <!-- stopPropagation evita que el modal se cierre al hacer clic dentro de la caja blanca -->
+        <div class="modal-card" (click)="$event.stopPropagation()">
+
+          <!-- Botón circular de cerrar (arriba a la derecha en el wireframe) -->
+          <button class="btn-cerrar-modal" (click)="cerrarModal()">✕</button>
+
+          <!-- título principal enmarcado -->
+          <div class="modal-header-box">
+            <h2>Información de reserva</h2>
+          </div>
+
+          <!-- inputs para el huésped -->
+          <div class="modal-inputs">
+            <input
+              type="text"
+              placeholder="Nombre del huésped"
+              [(ngModel)]="nombreHuesped"
+              class="input-wireframe">
+            <input
+              type="email"
+              placeholder="Correo electrónico"
+              [(ngModel)]="correoHuesped"
+              class="input-wireframe">
+          </div>
+
+          <div class="detalles-reserva-box">
+            <div class="detalles-reserva-header">
+              Detalles de la reserva
+            </div>
+
+            <div class="detalles-reserva-body">
+              <!-- identificador (ancho completo) -->
+              <div class="dato-chip full-width">
+                <span class="chip-label">ID Reserva:</span> {{ codigoReserva }}
+              </div>
+
+              <!-- 3.4 cotización -->
+              <div class="datos-grid">
+                <div class="dato-chip">
+                  <!-- ← CAMBIO: "Casa / Villa" por "Apartamento / Suite" -->
+                  <span class="chip-label">Alojamiento:</span> Apartamento / Suite
+                </div>
+                <div class="dato-chip">
+                  <span class="chip-label">Nombre:</span> {{ alojamiento.nombre }}
+                </div>
+
+                <div class="dato-chip">
+                  <span class="chip-label">N° huéspedes:</span> {{ huespedes }} adultos
+                </div>
+                <div class="dato-chip">
+                  <span class="chip-label">Entrada:</span> {{ fechaEntrada }}
+                </div>
+
+                <div class="dato-chip">
+                  <span class="chip-label">N° noches:</span> {{ noches }} noches
+                </div>
+                <div class="dato-chip">
+                  <span class="chip-label">Salida:</span> {{ fechaSalida }}
+                </div>
+
+                <div class="dato-chip">
+                  <span class="chip-label">Correo (confir):</span> {{ correoHuesped || 'Pendiente...' }}
+                </div>
+                <div class="dato-chip">
+                  <span class="chip-label">Nombre (confir):</span> {{ nombreHuesped || 'Pendiente...' }}
+                </div>
+              </div>
+
+              <!-- Desglose de tarifas dentro del modal -->
+              <div class="desglose-modal">
+                <div class="dato-chip full-width">
+                  <span class="chip-label">Subtotal ({{ noches }} noches):</span> ${{ subtotal | number }}
+                </div>
+                <div class="dato-chip full-width">
+                  <span class="chip-label">Tarifa de limpieza:</span> ${{ tarifaLimpieza | number }}
+                </div>
+                <div class="dato-chip full-width">
+                  <span class="chip-label">Tarifa de servicio (10%):</span> ${{ tarifaServicio | number }}
+                </div>
+                <div class="dato-chip valor-total">
+                  <span class="chip-label">Total (Subtotal + Limpieza + Servicio):</span>
+                  <strong> ${{ valorTotal | number }}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- estado de la reserva -->
+          <div class="estado-seccion">
+            <span class="estado-label">Estado de la reserva</span>
+            <div class="estado-caja" [class.pendiente]="estadoReserva === 'PENDIENTE'">
+              {{ estadoReserva }}
+            </div>
+          </div>
+
+          <!-- botón de Reservar / confirmar (Encima de Regresar) -->
+          <button
+            class="btn-confirmar-reserva"
+            (click)="confirmarReserva()"
+            [disabled]="estadoReserva === 'CONFIRMADA'">
+            {{ estadoReserva === 'CONFIRMADA' ? '¡Reserva Confirmada!' : 'Confirmar Reserva' }}
+          </button>
+
+          <!-- botón Regresar -->
+          <button class="btn-regresar" (click)="cerrarModal()">
+            Regresar
+          </button>
+
+        </div>
+      </div>
+      <!-- ========================-->
+    }
+  </div>
+} @else {
+  <section class="detalle contenido">
+    <p>No encontramos este alojamiento.</p>
+    <button class="reservar" (click)="volver()">← Volver</button>
+  </section>
+}

@@ -1,0 +1,29 @@
+:host {
+    font-family: 'Funnel Sans', sans-serif;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+label {
+    text-align: left;
+    width: 80%;
+    color: #867F7F;
+    margin: 0 auto;
+    display: block;
+    font-weight: 600;
+    font-size: 0.789rem;
+    margin-bottom: 0.375rem;
+}
+
+input {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    background: #7993A0;
+    color: #eee6e6;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.875rem 1rem;
+    font-size: 0.789rem;
+}

@@ -1,0 +1,95 @@
+:host{
+    font-family: 'Funnel Sans', sans-serif;
+    display: block;
+    background: #F2F6FA;
+}
+
+.registro {
+    max-width: 30rem; 
+    margin: 0 auto; 
+    text-align: left; 
+    padding-bottom: 4rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.header{
+    font-family: 'Dela Gothic One', sans-serif;
+    font-size: 4.375rem;
+    text-align: center;
+    color: #000;;
+    margin: 0.1rem 0;
+    position: relative;
+}
+
+.subtitle-description{
+    font-size: 1.205rem;
+    text-align: center;
+    color: #000;
+    margin: 0.1rem 0;
+    position: relative;
+}
+
+.text-complement {
+    font-size: 1.02rem;
+    max-width: 30rem ;
+    margin: 3rem 0 0.5rem 0;
+    color: #000;
+}
+
+.section-title {
+    text-align: left;
+    margin-top: 2rem;
+}
+
+.residencias, .pago-fila {
+    display: flex;
+    gap: 1rem;
+}
+
+.residencias > div {
+    flex: 1;
+}
+
+.opciones-fila {
+    text-align: center;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.opcion-box {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color: #3E563E;
+    min-width: 6rem;
+    height: 10rem;
+    border-radius: 0.625rem;
+    background: #93A889;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.opcion-box:hover {
+    color: #fbf9f9;
+    background-color: #3E563E;
+}
+
+.opcion-box.selected {
+    background: #3E563E;
+    color: #fff;
+}
+
+.pago-fila > app-custom-input {
+    flex: 1;
+}
+
+app-button { /*sin punto es selecitor de tipo (etiqueta o elemento)*/
+    display: block;
+    width: fit-content;
+    margin: 1.5rem auto 0;
+}

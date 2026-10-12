@@ -1,0 +1,9 @@
+<nav class="barra">
+  @for (item of items; track item.ruta) {
+    <!-- home tiene clase active-->
+    <a [routerLink]="item.ruta" routerLinkActive="active" class="nav-item">
+      <span class="icon">{{ item.icono }}</span>
+      <span class="label">{{ item.texto }}</span>
+    </a>
+  }
+</nav>

@@ -1,0 +1,59 @@
+<section class="registro">
+    <section class="marketplace">
+
+        <!-- header -->
+        <header class="header">
+            <div class="header-text">
+                <h1 class="title">MARKETPLACE</h1>
+                <p class="subtitle">Belong anywhere...</p>
+            </div>
+            <div class="header-actions">
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </header>
+
+        <!-- barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Barra de búsqueda">
+            <button class="search-btn" aria-label="Buscar"></button>
+        </div>
+
+        <!-- filtros, ahora navegan con routerLink -->
+        <div class="filtros">
+            <button class="filtro-btn" (click)="irAFiltro  ('casas')">Casas</button>
+            <button class="filtro-btn" (click)="irAFiltro  ('apartamentos')">Apartamentos</button>
+            <button class="filtro-btn" (click)="irAFiltro  ('animales')">Animales</button>
+            <button class="filtro-btn" (click)="irAFiltro  ('rentar')">Filtrar</button>
+        </div>
+
+        <!-- hero -->
+        <div class="hero">
+            <img src="Bogota.jpg" alt="Bogotá">
+        </div>
+
+        <!-- fila título -->
+        <div class="fila-titulo">
+            <h3 class="fila-label">Alojamientos destacados</h3>
+        </div>
+
+        <!-- cards -->
+        <div class="cards-destinos">
+            @for (destino of destinosVisibles; track $index) {
+                <article
+                class="card-destino"
+                [routerLink]="['/filter']"
+                [queryParams]="{ ciudad: destino.clave }">
+                <span class="card-tag top">{{ destino.ciudad }}</span>
+                <img [src]="destino.imagen" [alt]="destino.ciudad">
+                <span class="card-tag bottom">{{ destino.pais }}</span>
+        </article>}
+        </div>
+
+        <!--aumenta el ´límite de destinos visibles-->
+        <a href="#" class="ver-mas" (click)="verMas(); $event.preventDefault()">
+            Ver más...
+        </a>
+
+    </section>
+</section>

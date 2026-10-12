@@ -1,0 +1,18 @@
+button { /*clase pra definicion de botones*/
+    border: none; /*no tiene delineado*/
+    border-radius: 62.438rem; /*cantidad de cruva en las aritas*/
+    padding: 0.5rem 1.375rem; /*espacio interno entre el contenido y el borde ddedl elemento*/
+    font-weight: 600;
+    cursor: pointer; /*el pointer muestra la manita al pasar sobre el espacio*/
+}
+
+button.base-button { 
+    background: #1E1E1E;
+    color: white;
+}
+
+button:hover{ 
+    background: #7993A0;
+    color: white;
+
+}

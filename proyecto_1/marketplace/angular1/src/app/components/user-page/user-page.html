@@ -1,0 +1,100 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
+
+@if (!mostrarConfiguration) {
+  <!-- Información general del usuario -->
+  <div class="top-bar">
+    <div class="icon-circle"></div>
+    <div class="user-info-header">
+      <h3 class="text-complement">{{ nombreUsuario }}</h3>
+      <p class="user-subtext">{{ correoUsuario }} · {{ misReservas.length }} reserva(s) activa(s)</p>
+    </div>
+    <div class="top-bar-actions">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <span class="menu-icon">⋯</span>
+    </div>
+  </div>
+
+  <section class="registro">
+    <h4 class="section-label">Resumen de actividad</h4>
+    <div class="opciones-fila">
+      @for (opcion of reservaOpciones; track $index) {
+        <div
+          class="opcion-box"
+          [class.selected]="reservaSeleccionada === $index"
+          (click)="seleccionarReserva($index)">
+          <span class="opcion-titulo">{{ $index === 0 ? 'Última Reserva' : 'Estado de Cuenta' }}</span>
+          @if ($index === 0) {
+            <p class="opcion-detalle">
+              {{ misReservas.length > 0 ? misReservas[misReservas.length - 1].nombreAlojamiento : 'Sin reservas activas' }}
+            </p>
+          } @else {
+            <p class="opcion-detalle">Total reservas: {{ misReservas.length }}</p>
+          }
+        </div>
+      }
+    </div>
+
+    <h4 class="section-label">Preferencias</h4>
+    <div class="circulos-fila">
+      @for (color of preferenciasColores; track $index) {
+        <div
+          class="circulo"
+          [class.selected]="preferenciaSeleccionada === $index"
+          [style.background]="color"
+          (click)="seleccionarPreferencia($index)">
+        </div>
+      }
+    </div>
+
+    <!-- CAJAS CON LÍNEAS NARANJAS: Información esencial de la reserva confirmada -->
+    <h4 class="section-label">Reservas Confirmadas (Esencial)</h4>
+    
+    @if (misReservas.length > 0) {
+      <div class="cards-fila">
+        @for (reserva of misReservas.slice(0, 2); track reserva.idReserva; let i = $index) {
+          <div
+            class="metodo-card"
+            [class.selected]="tarjetaActiva === i"
+            (click)="seleccionarMetodo(i)">
+            
+            <span class="indicador"></span>
+            
+            <!-- Información esencial dentro de la caja -->
+            <div class="info-esencial-reserva">
+              <span class="badge-estado">{{ reserva.estado }}</span>
+              <h5 class="esencial-titulo">{{ reserva.nombreAlojamiento }}</h5>
+              <p class="esencial-ciudad">📍 {{ reserva.ciudad ?? 'Ciudad no especificada' }}</p> <!-- CAMBIO: Acceso directo y fallback -->
+              <p class="esencial-fechas">📅 {{ reserva.fechaEntrada }} → {{ reserva.fechaSalida }}</p>
+              <p class="esencial-total">💰 <strong>${{ reserva.valorTotal | number }}</strong></p>
+            </div>
+
+            <!-- Tus líneas naranjas/verdes originales -->
+            <div class="lineas-decorativas">
+              <div class="linea linea-larga"></div>
+              <div class="linea linea-corta"></div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <!-- Mensaje apropiado si no existen reservas -->
+      <div class="sin-reservas-box">
+        <p>Aún no tienes reservas confirmadas. ¡Explora los alojamientos y agenda tu próxima estadía!</p>
+      </div>
+    }
+
+    <!-- BOTÓN DE BOOKINGS (Mis Reservas) -->
+    <!-- CAMBIO: Se reemplazó button por <a routerLink="/bookings"> -->
+    <a routerLink="/bookings" class="btn-bookings">Ver mis reservas</a>
+
+    <!-- CAMBIO: Se eliminó el panel desplegable de bookings completo -->
+    <!-- El bloque @if (mostrarBookings) { ... } fue eliminado -->
+
+    <app-button [textButton]="'Volver al Inicio'" [variant]="'base-button'" (buttonClick)="onPagar()"></app-button>
+  </section>
+} @else {
+  <app-home-page></app-home-page>
+}

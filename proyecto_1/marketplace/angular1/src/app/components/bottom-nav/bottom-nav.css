@@ -1,0 +1,31 @@
+.barra {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5rem 0;
+    background: #fff;
+    border-top: 1px solid #d9d9d9;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    text-decoration: none;
+    color: #867f7f;
+    font-family: 'Funnel Sans', sans-serif;
+    font-size: 0.75rem;
+}
+
+.icon {
+    font-size: 1.5rem;
+}
+
+.nav-item.active {
+    color: #0f3040;
+    font-weight: 600;
+}
